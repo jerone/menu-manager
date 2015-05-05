@@ -1,0 +1,38 @@
+@import "ui-variables";
+
+.menu-manager {
+    position: relative;
+    overflow: auto;
+    color: @text-color;
+
+    .btn-collapse-all {
+        position: absolute;
+        right: @component-padding;
+        top: @component-padding;
+        z-index: 100;
+    }
+
+    & > section {
+        padding: 20px;
+        h1 {
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.6em;
+            color: @text-color-highlight;
+            &:hover {
+                color: @text-color-highlight;
+            }
+        }
+        h2 {
+            font-size: 1.5em;
+            line-height: 1.2;
+            margin: 1.75em 0 0;
+            color: @text-color-highlight;
+        }
+        hr {
+            display: inline-block;
+            margin: 0 0 0.3em;
+            width: 100%;
+        }
+    }
+}
