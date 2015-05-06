@@ -2,7 +2,7 @@ MenuManagerView = require './menu-manager-view'
 
 module.exports =
 class MenuManagerPage
-  constructor: () ->
+  constructor: ->
 
   getTitle:     -> 'Menu Manager'
   getViewClass: -> MenuManagerView
