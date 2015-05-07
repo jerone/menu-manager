@@ -1,5 +1,5 @@
+MenuItem = require './menu-item'
 MenuTreeView = require './menu-tree-view'
-{TreeView} = require './tree-view'
 {$, ScrollView} = require 'atom-space-pen-views'
 {CompositeDisposable} = require 'atom'
 
@@ -9,20 +9,9 @@ class MenuManagerView extends ScrollView
     @div class : 'menu-manager', =>
       @button outlet : 'collapseAllButton', class : 'btn btn-collapse-all', 'Collapse All Sections'
   initialize : (state) ->
-    #super
-    @treeView = new TreeView
-    @append(@treeView)
-    @treeView.onSelect ({node, item}) ->
-      console.log arguments
-    @treeView.setRoot({
-      label : 'test',
-      icon : 'icon-file-directory',
-      children : [{
-        label : 'test2',
-        icon : 'icon-file-directory',
-        children : [{
-          label : 'test3',
-          icon : ''
-        }]
-      }]
-    })
+    mainMenus = []
+    mainMenus.push new MenuItem item for item in atom.menu.template
+    @append new MenuTreeView(mainMenus, 'Main Menu')
+    contextMenus = []
+    contextMenus.push new MenuItem item for item in atom.contextMenu.itemSets
+    @append new MenuTreeView(contextMenus, 'Context Menu')
