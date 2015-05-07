@@ -9,16 +9,14 @@ module.exports =
       if children?.length
         @li class: 'list-nested-item list-selectable-item', =>
           @div class: 'list-item', =>
-            if keystroke
-              @span class: "pull-right key-binding", keystroke
+            @span class: "pull-right key-binding", keystroke if keystroke
             @span class: "icon #{icon}", label
           @ul class: 'list-tree', =>
             for child in children
               @subview 'child', new TreeNode(child)
       else
         @li class: 'list-item list-selectable-item', =>
-          if keystroke
-            @span class: "pull-right key-binding", keystroke
+          @span class: "pull-right key-binding", keystroke if keystroke
           @span class: "icon #{icon}", label
 
     initialize: (item) ->
