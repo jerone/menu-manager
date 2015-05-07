@@ -78,11 +78,15 @@ module.exports =
     onSelect: (callback) =>
       @emitter.on 'on-select', callback
 
+    onDblClick: (callback) =>
+      @emitter.on 'on-dbl-click', callback
+
     setRoot: (root, ignoreRoot=false) ->
       rootNode = @rootNode = new TreeNode(root)
 
       @rootNode.onDblClick ({node, item}) =>
         node.setCollapsed()
+        @emitter.emit 'on-dbl-click', {node, item}
       @rootNode.onSelect ({node, item}) =>
         @clearSelect()
         node.setSelected()

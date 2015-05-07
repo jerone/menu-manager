@@ -23,5 +23,11 @@ class MenuTreeView extends View
     @treeView = new TreeView
     @append @treeView
     @treeView.setRoot root
-    @treeView.onSelect ({node, item}) ->
+    @treeView.onDblClick ({node, item}) ->
       console.log arguments
+      if item.command
+        activeElement = document.activeElement
+        # Use the workspace element view if body has focus
+        if activeElement is document.body and workspaceElement = atom.views.getView(atom.workspace)
+          activeElement = workspaceElement
+        atom.commands.dispatch activeElement, item.command
