@@ -6,7 +6,7 @@
 module.exports =
   TreeNode: class TreeNode extends View
     @content: ({label, icon, children}) ->
-      if children
+      if children?.length
         @li class: 'list-nested-item list-selectable-item', =>
           @div class: 'list-item', =>
             @span class: "icon #{icon}", label
@@ -26,25 +26,25 @@ module.exports =
       @on 'click', @clickItem
 
     setCollapsed: ->
-      @toggleClass('collapsed') if @item.children
+      @toggleClass('collapsed') if @item.children?.length
 
     setSelected: ->
       @addClass('selected')
 
     onDblClick: (callback) ->
       @emitter.on 'on-dbl-click', callback
-      if @item.children
+      if @item.children?.length
         for child in @item.children
           child.view.onDblClick callback
 
     onSelect: (callback) ->
       @emitter.on 'on-select', callback
-      if @item.children
+      if @item.children?.length
         for child in @item.children
           child.view.onSelect callback
 
     clickItem: (event) =>
-      if @item.children
+      if @item.children?.length
         selected = @hasClass('selected')
         @removeClass('selected')
         $target = @find('.list-item:first')
@@ -96,14 +96,15 @@ module.exports =
       @root.append $$ ->
         @div =>
           if ignoreRoot
-            for child in root.children
-              @subview 'child', child.view
+            if root.children?.length
+              for child in root.children
+                @subview 'child', child.view
           else
             @subview 'root', rootNode
 
     traversal: (root, doing) =>
       doing(root.item)
-      if root.item.children
+      if root.item.children?.length
         for child in root.item.children
           @traversal(child.view, doing)
 
