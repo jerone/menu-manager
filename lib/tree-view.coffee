@@ -5,24 +5,28 @@
 
 module.exports =
   TreeNode: class TreeNode extends View
-    @content: ({label, icon, children, keystroke}) ->
+    @content: ({label, icon, children, keystroke}, {useMnemonic}={useMnemonic:false}) ->
       if children?.length
         @li class: 'list-nested-item list-selectable-item', =>
           @div class: 'list-item', =>
-            @span class: "pull-right key-binding", keystroke if keystroke
-            @span class: "icon #{icon}", label
+            @span class: 'pull-right key-binding', keystroke if keystroke
+            @span class: "icon #{icon}", outlet: 'label', label
           @ul class: 'list-tree', =>
             for child in children
-              @subview 'child', new TreeNode(child)
+              @subview 'child', new TreeNode(child, {useMnemonic: useMnemonic})
       else
         @li class: 'list-item list-selectable-item', =>
-          @span class: "pull-right key-binding", keystroke if keystroke
-          @span class: "icon #{icon}", label
+          @span class: 'pull-right key-binding', keystroke if keystroke
+          @span class: "icon #{icon}", outlet: 'label', label
 
-    initialize: (item) ->
+    initialize: (item, {useMnemonic}={useMnemonic:false}) ->
       @emitter = new Emitter
       @item = item
       @item.view = this
+
+      if useMnemonic
+        @label.html item.label?.replace /&(\D)/, (match, group) ->
+          "<u>#{group}</u>"
 
       @on 'dblclick', @dblClickItem
       @on 'click', @clickItem
@@ -70,7 +74,7 @@ module.exports =
       @div class: '-tree-view-', =>
         @ul class: 'list-tree has-collapsable-children', outlet: 'root'
 
-    initialize: ->
+    initialize: ({@useMnemonic}={useMnemonic:false}) ->
       super
       @emitter = new Emitter
 
@@ -84,7 +88,7 @@ module.exports =
       @emitter.on 'on-dbl-click', callback
 
     setRoot: (root, ignoreRoot=false) ->
-      rootNode = @rootNode = new TreeNode(root)
+      rootNode = @rootNode = new TreeNode(root, {useMnemonic: @useMnemonic})
 
       @rootNode.onDblClick ({node, item}) =>
         node.setCollapsed()

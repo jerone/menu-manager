@@ -20,7 +20,7 @@ class MenuTreeView extends View
       children : []
     root.children.push item for item in menu
 
-    @treeView = new TreeView
+    @treeView = new TreeView {useMnemonic:true}
     @append @treeView
     @treeView.setRoot root
     @treeView.onDblClick ({node, item}) ->
