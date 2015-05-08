@@ -6,6 +6,7 @@ class MenuTreeView extends View
   @content : ->
     @section =>
       @h1 outlet : 'title'
+      @p 'Double-click item to execute the command.'
       @ul outlet : 'noResults', class : 'background-message centered', =>
         @li 'No Results'
 
@@ -23,11 +24,23 @@ class MenuTreeView extends View
     @treeView = new TreeView {useMnemonic:true}
     @append @treeView
     @treeView.setRoot root
-    @treeView.onDblClick ({node, item}) ->
-      console.log arguments
-      if item.command
-        activeElement = document.activeElement
-        # Use the workspace element view if body has focus
-        if activeElement is document.body and workspaceElement = atom.views.getView(atom.workspace)
-          activeElement = workspaceElement
-        atom.commands.dispatch activeElement, item.command
+    @treeView.onDblClick ({item, node}) =>
+      console.log arguments, item.selector
+      if item.command and selector = @getActiveElement(item, node)
+        if item.created
+          item.created.call(item)
+        atom.commands.dispatch selector, item.command, item.commandDetail
+
+  getActiveElement: (item, node)->
+    console.log(arguments, item.selector, node.parentView?.item?.selector)
+    if selector = item.selector
+      document.querySelector(selector)
+    else if selector = node.parentView?.item?.selector
+      document.querySelector(selector)
+    else
+      # https://github.com/atom/atom/blob/master/src/window-event-handler.coffee#L45-L51
+      activeElement = document.activeElement
+      # Use the workspace element view if body has focus
+      if activeElement is document.body and workspaceElement = atom.views.getView(atom.workspace)
+        activeElement = workspaceElement
+      activeElement
