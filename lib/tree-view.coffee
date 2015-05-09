@@ -5,7 +5,7 @@
 
 module.exports =
   TreeNode: class TreeNode extends View
-    @content: ({label, icon, children, keystroke}, {useMnemonic}={useMnemonic:false}) ->
+    @content: ({label, icon, children, keystroke}, options={}) ->
       if children?.length
         @li class: 'list-nested-item list-selectable-item', =>
           @div class: 'list-item', =>
@@ -13,18 +13,18 @@ module.exports =
             @span class: "icon #{icon}", outlet: 'label', label
           @ul class: 'list-tree', =>
             for child in children
-              @subview 'child', new TreeNode(child, {useMnemonic: useMnemonic})
+              @subview 'child', new TreeNode child, options
       else
         @li class: 'list-item list-selectable-item', =>
           @span class: 'pull-right key-binding', keystroke if keystroke
           @span class: "icon #{icon}", outlet: 'label', label
 
-    initialize: (item, {useMnemonic}={useMnemonic:false}) ->
+    initialize: (item, options={}) ->
       @emitter = new Emitter
       @item = item
       @item.view = this
 
-      if useMnemonic
+      if options.useMnemonic
         @label.html item.label?.replace /&(\D)/, (match, group) ->
           "<u>#{group}</u>"
 
@@ -32,10 +32,10 @@ module.exports =
       @on 'click', @clickItem
 
     setCollapsed: ->
-      @toggleClass('collapsed') if @item.children?.length
+      @toggleClass 'collapsed' if @item.children?.length
 
     setSelected: ->
-      @addClass('selected')
+      @addClass 'selected'
 
     onDblClick: (callback) ->
       @emitter.on 'on-dbl-click', callback
@@ -51,21 +51,21 @@ module.exports =
 
     clickItem: (event) =>
       if @item.children?.length
-        selected = @hasClass('selected')
-        @removeClass('selected')
-        $target = @find('.list-item:first')
+        selected = @hasClass 'selected'
+        @removeClass 'selected'
+        $target = @find '.list-item:first'
         left = $target.position().left
         right = $target.children('span').position().left
         width = right - left
-        @toggleClass('collapsed') if event.offsetX <= width
-        @addClass('selected') if selected
+        @toggleClass 'collapsed' if event.offsetX <= width
+        @addClass 'selected' if selected
         return false if event.offsetX <= width
 
-      @emitter.emit 'on-select', {node: this, item: @item}
+      @emitter.emit 'on-select', {node: @, @item}
       return false
 
     dblClickItem: (event) =>
-      @emitter.emit 'on-dbl-click', {node: this, item: @item}
+      @emitter.emit 'on-dbl-click', {node: @, @item}
       return false
 
 
@@ -74,7 +74,7 @@ module.exports =
       @div class: '-tree-view-', =>
         @ul class: 'list-tree has-collapsable-children', outlet: 'root'
 
-    initialize: ({@useMnemonic}={useMnemonic:false}) ->
+    initialize: (@options={}) ->
       super
       @emitter = new Emitter
 
@@ -88,7 +88,7 @@ module.exports =
       @emitter.on 'on-dbl-click', callback
 
     setRoot: (root, ignoreRoot=false) ->
-      rootNode = @rootNode = new TreeNode(root, {useMnemonic: @useMnemonic})
+      rootNode = @rootNode = new TreeNode root, @options
 
       @rootNode.onDblClick ({node, item}) =>
         node.setCollapsed()
@@ -112,21 +112,21 @@ module.exports =
       doing(root.item)
       if root.item.children?.length
         for child in root.item.children
-          @traversal(child.view, doing)
+          @traversal child.view, doing
 
     toggleTypeVisible: (type) =>
       @traversal @rootNode, (item) =>
-        if item.type == type
+        if item.type is type
           item.view.toggle()
 
     sortByName: (ascending=true) =>
       @traversal @rootNode, (item) =>
         item.children?.sort (a, b) =>
           if ascending
-            return a.name.localeCompare(b.name)
+            return a.name.localeCompare b.name
           else
-            return b.name.localeCompare(a.name)
-      @setRoot(@rootNode.item)
+            return b.name.localeCompare a.name
+      @setRoot @rootNode.item
 
     sortByRow: (ascending=true) =>
       @traversal @rootNode, (item) =>
@@ -135,10 +135,10 @@ module.exports =
             return a.position.row - b.position.row
           else
             return b.position.row - a.position.row
-      @setRoot(@rootNode.item)
+      @setRoot @rootNode.item
 
     clearSelect: ->
-      $('.list-selectable-item').removeClass('selected')
+      $('.list-selectable-item').removeClass 'selected'
 
     select: (item) ->
       @clearSelect()
