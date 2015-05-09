@@ -4,5 +4,5 @@ module.exports =
 class MenuManagerPage
   constructor: ->
 
-  getTitle:     -> 'Menu Manager'
+  getTitle: -> 'Menu Manager'
   getViewClass: -> MenuManagerView

@@ -6,6 +6,7 @@
 module.exports =
   TreeNode: class TreeNode extends View
     @content: ({label, icon, children, keystroke}, options={}) ->
+      console.log 'content', arguments
       if children?.length
         @li class: 'list-nested-item list-selectable-item', =>
           @div class: 'list-item', =>
@@ -20,6 +21,7 @@ module.exports =
           @span class: "icon #{icon}", outlet: 'label', label
 
     initialize: (item, options={}) ->
+      console.log 'initialize', arguments
       @emitter = new Emitter
       @item = item
       @item.view = this
@@ -115,13 +117,13 @@ module.exports =
           @traversal child.view, doing
 
     toggleTypeVisible: (type) =>
-      @traversal @rootNode, (item) =>
+      @traversal @rootNode, (item) ->
         if item.type is type
           item.view.toggle()
 
     sortByName: (ascending=true) =>
-      @traversal @rootNode, (item) =>
-        item.children?.sort (a, b) =>
+      @traversal @rootNode, (item) ->
+        item.children?.sort (a, b) ->
           if ascending
             return a.name.localeCompare b.name
           else
@@ -129,8 +131,8 @@ module.exports =
       @setRoot @rootNode.item
 
     sortByRow: (ascending=true) =>
-      @traversal @rootNode, (item) =>
-        item.children?.sort (a, b) =>
+      @traversal @rootNode, (item) ->
+        item.children?.sort (a, b) ->
           if ascending
             return a.position.row - b.position.row
           else

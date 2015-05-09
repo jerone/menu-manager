@@ -3,14 +3,14 @@ MenuManagerPage = require './menu-manager-page'
 {$$} = require 'atom-space-pen-views'
 
 module.exports = MenuManager =
-  subscriptions: null
+  subs: null
 
   activate: (state) ->
-    @subscriptions = new CompositeDisposable
-    @subscriptions.add atom.commands.add 'atom-workspace', 'menu-manager:toggle': ->
+    @subs = new CompositeDisposable
+    @subs.add atom.commands.add 'atom-workspace', 'menu-manager:toggle': ->
       atom.workspace.getActivePane().activateItem new MenuManagerPage()
 
   deactivate: ->
-    @subscriptions.dispose()
+    @subs.dispose()
 
   serialize: ->

@@ -31,7 +31,7 @@ class MenuTreeView extends View
           item.created.call item
         atom.commands.dispatch selector, item.command, item.commandDetail
 
-  getActiveElement: (item, node)->
+  getActiveElement: (item, node) ->
     console.log(arguments, item.selector, node.parentView?.item?.selector)
     if selector = item.selector
       document.querySelector selector
@@ -40,7 +40,6 @@ class MenuTreeView extends View
     else
       # https://github.com/atom/atom/blob/master/src/window-event-handler.coffee#L45-L51
       activeElement = document.activeElement
-      # Use the workspace element view if body has focus
       if activeElement is document.body and workspaceElement = atom.views.getView atom.workspace
         activeElement = workspaceElement
       activeElement
