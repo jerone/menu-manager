@@ -1,5 +1,11 @@
-# menu-manager package
+# [menu-manager](https://github.com/jerone/menu-manager)
 
-A short description of your package.
+[Menu Manager](https://atom.io/packages/menu-manager) shows main menu items and all context menu items from [Atom](https://atom.io).
 
-![A screenshot of your package](https://f.cloud.github.com/assets/69169/2290250/c35d867a-a017-11e3-86be-cd7c5bf3ff9b.gif)
+![A screenshot of your package](https://raw.githubusercontent.com/jerone/menu-manager/master/screenshot.gif)
+
+### Installation
+
+```
+apm install menu-manager
+```
