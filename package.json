@@ -1,12 +1,22 @@
 {
   "name": "menu-manager",
   "main": "./lib/menu-manager",
-  "version": "0.0.0",
-  "description": "A short description of your package",
-  "activationCommands": {
-    "atom-workspace": "menu-manager:toggle"
+  "version": "0.1.0",
+  "description": "Menu Manager shows main menu items and all context menu items from Atom.",
+  "keywords": ["menu", "main menu", "context menu", "contextmenu", "command"],
+  "homepage": "https://github.com/jerone/menu-manager",
+  "author": {
+    "name": "Jeroen van Warmerdam",
+    "email": "jeronevw@hotmail.com",
+    "url": "https://github.com/jerone"
   },
-  "repository": "https://github.com/atom/menu-manager",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jerone/menu-manager"
+  },
+  "bugs": {
+    "url": "https://github.com/jerone/menu-manager/issues"
+  },
   "license": "MIT",
   "engines": {
     "atom": ">=0.174.0 <2.0.0"
@@ -17,5 +27,9 @@
   },
   "devDependencies": {
     "coffeelint": "^1.9.6"
-  }
+  },
+  "activationCommands": {
+    "atom-workspace": "menu-manager:toggle"
+  },
+  "private": true
 }
