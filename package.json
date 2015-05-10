@@ -1,9 +1,15 @@
 {
   "name": "menu-manager",
   "main": "./lib/menu-manager",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Menu Manager shows main menu items and all context menu items from Atom.",
-  "keywords": ["menu", "main menu", "context menu", "contextmenu", "command"],
+  "keywords": [
+    "menu",
+    "main menu",
+    "context menu",
+    "contextmenu",
+    "command"
+  ],
   "homepage": "https://github.com/jerone/menu-manager",
   "author": {
     "name": "Jeroen van Warmerdam",
