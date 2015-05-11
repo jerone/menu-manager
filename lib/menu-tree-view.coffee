@@ -3,16 +3,17 @@
 
 module.exports =
 class MenuTreeView extends View
-  @content: ->
-    @section =>
-      @h1 outlet: 'title'
+  @content: (name, title, menu, contentFn) ->
+    #console.log 'MenuTreeView.@content', arguments
+    @section class: 'bordered collapsed', 'data-name': name, =>
+      @h1 outlet: 'title', class: 'section-heading', title
       @p 'Double-click item to execute the command.'
       @ul outlet: 'noResults', class: 'background-message centered', =>
         @li 'No Results'
 
-  constructor: (menu, title) ->
+  constructor: (name, title, menu, contentFn) ->
+    #console.log 'MenuTreeView.constructor', arguments
     super
-    @title.text title
     @noResults.toggle menu.length is 0
 
     root =
@@ -25,14 +26,14 @@ class MenuTreeView extends View
     @append @treeView
     @treeView.setRoot root
     @treeView.onDblClick ({item, node}) =>
-      console.log arguments, item.selector
+      console.log 'MenuTreeView.@treeView.onDblClick', arguments, item.selector
       if item.command and selector = @getActiveElement item, node
         if item.created
           item.created.call item
         atom.commands.dispatch selector, item.command, item.commandDetail
 
   getActiveElement: (item, node) ->
-    console.log(arguments, item.selector, node.parentView?.item?.selector)
+    console.log('MenuTreeView.getActiveElement', arguments, item.selector, node.parentView?.item?.selector)
     if selector = item.selector
       document.querySelector selector
     else if selector = node.parentView?.item?.selector

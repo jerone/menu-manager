@@ -1,18 +1,28 @@
 MenuItem = require './menu-item'
 MenuTreeView = require './menu-tree-view'
-{$, ScrollView} = require 'atom-space-pen-views'
+{$, $$, ScrollView} = require 'atom-space-pen-views'
 {CompositeDisposable} = require 'atom'
 
 module.exports =
 class MenuManagerView extends ScrollView
   @content: ->
-    @div class: 'menu-manager', =>
+    #console.log 'MenuManagerView.@content'
+    @div class: 'menu-manager pane-item', =>
       @button outlet: 'collapseAllButton', class: 'btn btn-collapse-all', 'Collapse All Sections'
+      @section class: 'bordered collapsed', =>
+        @h1 class: 'section-heading', 'Menu Manager'
+        @p 'Menu Manager shows main menu items and all context menu items from Atom.'
+      @menuSection 'main-menu', 'Main Menu', (new MenuItem item for item in atom.menu.template), ->
+        @p 'Double-click item to execute the command.'
+      @menuSection 'context-menu', 'Context Menu', (new MenuItem item for item in atom.contextMenu.itemSets), ->
+        @p 'Double-click item to execute the command.'
 
   initialize: (state) ->
-    mainMenus = []
-    mainMenus.push new MenuItem item for item in atom.menu.template
-    @append new MenuTreeView mainMenus, 'Main Menu'
-    contextMenus = []
-    contextMenus.push new MenuItem item for item in atom.contextMenu.itemSets
-    @append new MenuTreeView contextMenus, 'Context Menu'
+    super
+    #console.log 'MenuManagerView.initialize', MenuManagerView.menuSections
+    @append(section) for name, section of MenuManagerView.menuSections
+
+  @menuSections: {}
+  @menuSection: (name, title, menu, contentFn) ->
+    #console.log 'MenuManagerView.@menuSection', arguments
+    MenuManagerView.menuSections[name] = new MenuTreeView name, title, menu, contentFn

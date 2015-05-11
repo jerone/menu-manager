@@ -6,7 +6,7 @@
 module.exports =
   TreeNode: class TreeNode extends View
     @content: ({label, icon, children, keystroke}, options={}) ->
-      console.log 'content', arguments
+      #console.log 'TreeNode.content', arguments
       if children?.length
         @li class: 'list-nested-item list-selectable-item', =>
           @div class: 'list-item', =>
@@ -14,6 +14,7 @@ module.exports =
             @span class: "icon #{icon}", outlet: 'label', label
           @ul class: 'list-tree', =>
             for child in children
+              #console.log 'TreeNode.content 2', arguments, child, children
               @subview 'child', new TreeNode child, options
       else
         @li class: 'list-item list-selectable-item', =>
@@ -21,12 +22,13 @@ module.exports =
           @span class: "icon #{icon}", outlet: 'label', label
 
     initialize: (item, options={}) ->
-      console.log 'initialize', arguments
+      #console.log 'TreeNode.initialize', arguments
       @emitter = new Emitter
       @item = item
       @item.view = this
 
       if options.useMnemonic
+        #console.log 'TreeNode.initialize', item.label, arguments
         @label.html item.label?.replace /&(\D)/, (match, group) ->
           "<u>#{group}</u>"
 
