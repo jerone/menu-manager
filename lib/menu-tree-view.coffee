@@ -14,6 +14,7 @@ class MenuTreeView extends View
   constructor: (name, title, menu, contentFn) ->
     #console.log 'MenuTreeView.constructor', arguments
     super
+    @title.on 'click', @toggle.bind(@)
     @noResults.toggle menu.length is 0
 
     root =
@@ -44,3 +45,15 @@ class MenuTreeView extends View
       if activeElement is document.body and workspaceElement = atom.views.getView atom.workspace
         activeElement = workspaceElement
       activeElement
+
+  toggle: =>
+    if @hasClass('collapsed')
+      @expand()
+    else
+      @collapse()
+
+  collapse: =>
+    @addClass('collapsed')
+
+  expand: =>
+    @removeClass('collapsed')

@@ -16,12 +16,6 @@
 		padding: 20px;
 		h1 {
 			cursor: pointer;
-			font-weight: bold;
-			font-size: 1.6em;
-			color: @text-color-highlight;
-			&:hover {
-				color: @text-color-highlight;
-			}
 		}
 		h2 {
 			font-size: 1.5em;
@@ -33,6 +27,16 @@
 			display: inline-block;
 			margin: 0 0 0.3em;
 			width: 100%;
+		}
+		&.collapsed {
+			> .section-heading {
+				display: block;
+				margin: 0;
+				color: @text-color;
+			}
+			> * {
+				display: none
+			}
 		}
 	}
 }
