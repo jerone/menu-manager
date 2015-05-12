@@ -5,14 +5,17 @@
 
 module.exports =
   TreeNode: class TreeNode extends View
-    @content: ({label, icon, children, keystroke}, options={}) ->
+    @content: ({label, icon, children, keystroke, type}, options={}) ->
       #console.log 'TreeNode.content', arguments
       icon ?= ''
       if children?.length
         @li class: 'list-nested-item list-selectable-item', =>
           @div class: 'list-item', =>
             @span class: 'pull-right key-binding', keystroke if keystroke
-            @span class: "icon #{icon}", outlet: 'label', label
+            if type is 'separator'
+              @hr outlet: 'label'
+            else
+              @span outlet: 'label', class: "icon #{icon}", label
           @ul class: 'list-tree', =>
             for child in children
               #console.log 'TreeNode.content 2', arguments, child, children
@@ -20,7 +23,10 @@ module.exports =
       else
         @li class: 'list-item list-selectable-item', =>
           @span class: 'pull-right key-binding', keystroke if keystroke
-          @span class: "icon #{icon}", outlet: 'label', label
+          if type is 'separator'
+            @hr outlet: 'label'
+          else
+            @span outlet: 'label', class: "icon #{icon}", label
 
     initialize: (item, options={}) ->
       #console.log 'TreeNode.initialize', arguments
@@ -28,7 +34,7 @@ module.exports =
       @item = item
       @item.view = this
 
-      if options.useMnemonic
+      if options.useMnemonic and item.type isnt 'separator'
         #console.log 'TreeNode.initialize', item.label, arguments
         @label.html item.label?.replace /&(\D)/, (match, group) ->
           "<u>#{group}</u>"

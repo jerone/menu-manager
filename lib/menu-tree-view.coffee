@@ -28,6 +28,7 @@ class MenuTreeView extends View
     @treeView.setRoot root
     @treeView.onDblClick ({item, node}) =>
       console.log 'MenuTreeView.@treeView.onDblClick', arguments, item.selector
+      return if item.type is 'separator'
       if item.command and selector = @getActiveElement item, node
         if item.created
           item.created.call item
