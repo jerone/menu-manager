@@ -1,16 +1,21 @@
-MenuManagerPage = require './menu-manager-page'
 {CompositeDisposable} = require 'atom'
-{$$} = require 'atom-space-pen-views'
+MenuManagerURI = 'atom://menu-manager'
 
-module.exports = MenuManager =
-  subs: null
+createMenuManagerView = (state) ->
+  MenuManagerView = require './menu-manager-view'
+  new MenuManagerView(state)
 
-  activate: (state) ->
-    @subs = new CompositeDisposable
-    @subs.add atom.commands.add 'atom-workspace', 'menu-manager:toggle': ->
-      atom.workspace.getActivePane().activateItem new MenuManagerPage()
+atom.deserializers.add
+  name: 'MenuManagerView'
+  deserialize: (state) -> createMenuManagerView(state)
+
+module.exports =
+  activate: ->
+    @subscriptions = new CompositeDisposable
+    @subscriptions.add atom.workspace.addOpener (uri) ->
+      createMenuManagerView({uri}) if uri is MenuManagerURI
+    @subscriptions.add atom.commands.add 'atom-workspace', 'menu-manager:show', ->
+      atom.workspace.open(MenuManagerURI)
 
   deactivate: ->
-    @subs.dispose()
-
-  serialize: ->
+    @subscriptions.dispose()

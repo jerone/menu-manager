@@ -1,10 +1,4 @@
-'context-menu':
-  'atom-text-editor': [
-    {
-      'label': 'Toggle Menu Manager'
-      'command': 'menu-manager:toggle'
-    }
-  ]
+'context-menu': []
 'menu': [
   {
     'label': 'Packages'
@@ -12,8 +6,8 @@
       'label': 'Menu Manager'
       'submenu': [
         {
-          'label': 'Toggle'
-          'command': 'menu-manager:toggle'
+          'label': 'Show'
+          'command': 'menu-manager:show'
         }
       ]
     ]

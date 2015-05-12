@@ -1,10 +1,19 @@
 MenuItem = require './menu-item'
 MenuTreeView = require './menu-tree-view'
+{Disposable, CompositeDisposable} = require 'atom'
 {$, ScrollView} = require 'atom-space-pen-views'
-{CompositeDisposable} = require 'atom'
+
 
 module.exports =
 class MenuManagerView extends ScrollView
+  @menuSections: {}
+  @menuSection: (name, title, menu, contentFn) ->
+    #console.log 'MenuManagerView.@menuSection', arguments
+    MenuManagerView.menuSections[name] = new MenuTreeView name, title, menu, contentFn
+
+  @deserialize: (options={}) ->
+    new MenuManagerView(options)
+
   @content: ->
     #console.log 'MenuManagerView.@content'
     @div class: 'menu-manager pane-item', =>
@@ -17,17 +26,25 @@ class MenuManagerView extends ScrollView
       @menuSection 'context-menu', 'Context Menu', (new MenuItem item for item in atom.contextMenu.itemSets), ->
         @p 'Double-click item to execute the command.'
 
-  initialize: (state) ->
+  initialize: ({@uri}={}) ->
     super
     #console.log 'MenuManagerView.initialize', MenuManagerView.menuSections
     @append(section) for name, section of MenuManagerView.menuSections
     @toggleAllButton.on 'click', @toggleAllSections
 
-  @menuSections: {}
-  @menuSection: (name, title, menu, contentFn) ->
-    #console.log 'MenuManagerView.@menuSection', arguments
-    MenuManagerView.menuSections[name] = new MenuTreeView name, title, menu, contentFn
-
   toggleAllSections: ->
     @toggleAllSectionsState = if @toggleAllSectionsState is 'expand' then 'collapse' else 'expand'
     section[@toggleAllSectionsState]() for name, section of MenuManagerView.menuSections
+
+  serialize: ->
+    deserializer: @constructor.name
+    uri: @getURI()
+
+  getURI: -> @uri
+
+  getTitle: -> "Menu Manager"
+
+  onDidChangeTitle: -> new Disposable ->
+  onDidChangeModified: -> new Disposable ->
+
+  isEqual: (other) -> other instanceof MenuManagerView

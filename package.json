@@ -34,8 +34,5 @@
   "devDependencies": {
     "coffeelint": "^1.9.6"
   },
-  "activationCommands": {
-    "atom-workspace": "menu-manager:toggle"
-  },
   "private": true
 }
