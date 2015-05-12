@@ -7,6 +7,7 @@ module.exports =
   TreeNode: class TreeNode extends View
     @content: ({label, icon, children, keystroke}, options={}) ->
       #console.log 'TreeNode.content', arguments
+      icon ?= ''
       if children?.length
         @li class: 'list-nested-item list-selectable-item', =>
           @div class: 'list-item', =>
