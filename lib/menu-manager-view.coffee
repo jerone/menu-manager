@@ -36,6 +36,8 @@ class MenuManagerView extends ScrollView
     @toggleAllButton.on 'click', @toggleAllSections
 
   toggleAllSections: ->
+    firstSection = MenuManagerView.menuSections[Object.keys(MenuManagerView.menuSections)[0]]
+    @toggleAllSectionsState ?= if firstSection.isCollapsed() then 'collapse' else 'expand'
     @toggleAllSectionsState = if @toggleAllSectionsState is 'expand' then 'collapse' else 'expand'
     section[@toggleAllSectionsState]() for name, section of MenuManagerView.menuSections
 

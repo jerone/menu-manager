@@ -45,8 +45,11 @@ class MenuTreeView extends View
         activeElement = workspaceElement
       activeElement
 
+  isCollapsed: ->
+    @hasClass('collapsed')
+
   toggle: =>
-    if @hasClass('collapsed')
+    if @isCollapsed()
       @expand()
     else
       @collapse()
