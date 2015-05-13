@@ -39,4 +39,15 @@
 			}
 		}
 	}
+
+	.list-group li:not(.list-nested-item),
+	.list-tree li:not(.list-nested-item),
+	.list-group li.list-nested-item > .list-item,
+	.list-tree li.list-nested-item > .list-item {
+		line-height: 2.3em;
+	}
+	.list-group .selected::before,
+	.list-tree .selected::before {
+		height: 2.3em;
+	}
 }

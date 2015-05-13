@@ -3,7 +3,11 @@ class MenuItem
   constructor: ({@label, @selector, @command, @created, @type, submenu, items}) ->
     #console.log 'MenuItem.constructor', arguments
     @label ?= @selector
-    #@label = '---' if type is 'separator'
+    if @command?
+      @keystroke = atom.keymaps.findKeyBindings({
+        @command
+        target: @selector && document.querySelector(@selector)
+      })?[0]?.keystrokes
     if submenu?.length > 0 or items?.length > 0
       @children = []
       for subItem in submenu or items
