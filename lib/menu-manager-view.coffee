@@ -18,11 +18,19 @@ class MenuManagerView extends ScrollView
       @menuSection 'main-menu', 'Main Menu', ->
           (new MenuItem item for item in atom.menu.template)
         , ->
-          @p 'Double-click item to execute the command.'
+          @h1 class: 'section-heading', click: 'toggle', 'Main Menu'
+          @p 'Double-click menu item to execute the command.'
+          @ul outlet: 'noResultsElement', class: 'background-message centered', =>
+            @li 'No Results'
+          @div outlet: 'treeViewElement'
       @menuSection 'context-menu', 'Context Menu', ->
           (new MenuItem item for item in atom.contextMenu.itemSets)
         , ->
-          @p 'Double-click item to execute the command.'
+          @h1 class: 'section-heading', click: 'toggle', 'Context Menu'
+          @p 'Double-click context-menu item to execute the command.'
+          @ul outlet: 'noResultsElement', class: 'background-message centered', =>
+            @li 'No Results'
+          @div outlet: 'treeViewElement'
 
   @menuSections: {}
   @menuSection: (name, title, menu, contentFn) ->

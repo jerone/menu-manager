@@ -6,26 +6,21 @@ class MenuTreeView extends View
   @content: (name, title, menuFn, contentFn) ->
     #console.log 'MenuTreeView.@content', arguments
     @section class: 'bordered', 'data-name': name, =>
-      @h1 outlet: 'title', class: 'section-heading', title
-      @p 'Double-click item to execute the command.'
-      @ul outlet: 'noResults', class: 'background-message centered', =>
-        @li 'No Results'
+      contentFn.call(this)
 
   constructor: (name, title, menuFn, contentFn) ->
-    #console.log 'MenuTreeView.constructor', arguments
     super
-    @title.on 'click', @toggle.bind(@)
-    @append @treeView = new TreeView useMnemonic: true
+    #console.log 'MenuTreeView.constructor', arguments, this
+    (@treeViewElement or @).append @treeView = new TreeView useMnemonic: true
     @treeView.onDblClick ({item, node}) =>
       console.log 'MenuTreeView.@treeView.onDblClick', arguments, item.selector
       return if item.type is 'separator'
       if item.command and selector = @getActiveElement item, node
         item.created.call item if item.created
         atom.commands.dispatch selector, item.command, item.commandDetail
-
     process.nextTick =>
       menu = menuFn()
-      @noResults.toggle menu.length is 0
+      @noResultsElement?.toggle menu.length is 0
       @treeView.setRoot
         label: title,
         icon: 'icon-file-directory',
