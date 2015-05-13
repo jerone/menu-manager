@@ -13,7 +13,7 @@ class MenuTreeView extends View
     #console.log 'MenuTreeView.constructor', arguments, this
     (@treeViewElement or @).append @treeView = new TreeView useMnemonic: true
     @treeView.onDblClick ({item, node}) =>
-      console.log 'MenuTreeView.@treeView.onDblClick', arguments, item.selector
+      #console.log 'MenuTreeView.@treeView.onDblClick', arguments, item.selector
       return if item.type is 'separator'
       if item.command and selector = @getActiveElement item, node
         item.created.call item if item.created

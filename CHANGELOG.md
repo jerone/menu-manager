@@ -6,6 +6,7 @@
 * :sparkles: First level is now collapsed;
 * :sparkles: MenuManager is now a singleton and serialized;
 * :sparkles: Separators are now horizontal lines;
+* :sparkles: Show commands;
 
 ## 0.2.0
 * :sparkles: Added collapsible headers;
