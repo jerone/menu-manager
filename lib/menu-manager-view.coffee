@@ -1,18 +1,12 @@
 MenuItem = require './menu-item'
 MenuTreeView = require './menu-tree-view'
-{Disposable, CompositeDisposable} = require 'atom'
+{Disposable} = require 'atom'
 {$, ScrollView} = require 'atom-space-pen-views'
-
 
 module.exports =
 class MenuManagerView extends ScrollView
-  @menuSections: {}
-  @menuSection: (name, title, menu, contentFn) ->
-    #console.log 'MenuManagerView.@menuSection', arguments
-    MenuManagerView.menuSections[name] = new MenuTreeView name, title, menu, contentFn
-
-  @deserialize: (options={}) ->
-    new MenuManagerView(options)
+  @deserialize: (state) ->
+    new MenuManagerView(state)
 
   @content: ->
     #console.log 'MenuManagerView.@content'
@@ -25,6 +19,11 @@ class MenuManagerView extends ScrollView
         @p 'Double-click item to execute the command.'
       @menuSection 'context-menu', 'Context Menu', (new MenuItem item for item in atom.contextMenu.itemSets), ->
         @p 'Double-click item to execute the command.'
+
+  @menuSections: {}
+  @menuSection: (name, title, menu, contentFn) ->
+    #console.log 'MenuManagerView.@menuSection', arguments
+    MenuManagerView.menuSections[name] = new MenuTreeView name, title, menu, contentFn
 
   initialize: ({@uri}={}) ->
     super
@@ -41,10 +40,7 @@ class MenuManagerView extends ScrollView
     uri: @getURI()
 
   getURI: -> @uri
-
   getTitle: -> "Menu Manager"
-
-  onDidChangeTitle: -> new Disposable ->
-  onDidChangeModified: -> new Disposable ->
-
+  onDidChangeTitle: (cb) -> new Disposable ->
+  onDidChangeModified: (cb) -> new Disposable ->
   isEqual: (other) -> other instanceof MenuManagerView
