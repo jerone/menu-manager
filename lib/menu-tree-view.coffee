@@ -30,6 +30,7 @@ class MenuTreeView extends View
         label: title,
         icon: 'icon-file-directory',
         children: (item for item in menu)
+      child.view.setCollapsed() for child in @treeView.rootNode.item.children
 
   getActiveElement: (item, node) ->
     console.log('MenuTreeView.getActiveElement', arguments, item.selector, node.parentView?.item?.selector)
