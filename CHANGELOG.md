@@ -1,5 +1,6 @@
 ## vNext
 * :sparkles: Substitute version;
+* :sparkles: Highlight readonly items;
 
 ## v0.3.0
 * :bug: Detect if first section was collapsed before collapsing all sections;
