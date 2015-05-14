@@ -15,8 +15,10 @@ class MenuManagerView extends ScrollView
       @section class: 'bordered', =>
         @h1 class: 'block section-heading icon icon-checklist', 'Menu Manager'
         @p 'Menu Manager shows main menu items and all context menu items from Atom.'
-      @menuSection 'main-menu', 'Main Menu', ->
-          (new MenuItem item for item in atom.menu.template)
+      @menuSection 'main-menu', 'Main Menu', (item) ->
+          substituteVersion = (item) ->
+            item.label = "Version #{atom.appVersion}" if item.label is 'VERSION'
+          (new MenuItem item, substituteVersion for item in atom.menu.template)
         , ->
           @h1 class: 'block section-heading icon icon-checklist', click: 'toggle', 'Main Menu'
           @p 'Double-click menu item to execute the command.'

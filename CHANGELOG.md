@@ -1,4 +1,7 @@
-## 0.3.0
+## vNext
+* :sparkles: Substitute version;
+
+## v0.3.0
 * :bug: Detect if first section was collapsed before collapsing all sections;
 * :bug: Fixed accessing atom menu to soon;
 * :bug: Default icon shouldn't be undefined;
@@ -9,9 +12,9 @@
 * :sparkles: Show commands;
 * :sparkles: Added icons;
 
-## 0.2.0
+## v0.2.0
 * :sparkles: Added collapsible headers;
 * :sparkles: Added collapse all headers;
 
-## 0.1.0
+## v0.1.0
 * :clapper: Initial release

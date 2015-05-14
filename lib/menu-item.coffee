@@ -1,6 +1,6 @@
 module.exports =
 class MenuItem
-  constructor: ({@label, @selector, @command, @created, @type, submenu, items}) ->
+  constructor: ({@label, @selector, @command, @created, @type, submenu, items}, fn) ->
     #console.log 'MenuItem.constructor', arguments
     @label ?= @selector
     if @command?
@@ -12,4 +12,5 @@ class MenuItem
       @children = []
       for subItem in submenu or items
         subItem.selector ?= @selector
-        @children.push new MenuItem subItem
+        @children.push new MenuItem subItem, fn
+    fn?(@)
