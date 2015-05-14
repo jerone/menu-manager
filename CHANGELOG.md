@@ -1,7 +1,8 @@
 ## vNext
 * :sparkles: Substitute version;
 * :sparkles: Highlight readonly items;
-* :sparkles: Highlight hidden items;
+* :sparkles: Highlight hidden items
+* :art: Normalized keystrokes;
 
 ## v0.3.0
 * :bug: Detect if first section was collapsed before collapsing all sections;
