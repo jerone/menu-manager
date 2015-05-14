@@ -5,7 +5,7 @@
 
 module.exports =
   TreeNode: class TreeNode extends View
-    @content: ({label, icon, children, keystroke, type, command, enabled}, options={}) ->
+    @content: ({label, icon, children, keystroke, type, command, enabled, visible}, options={}) ->
       #console.log 'TreeNode.content', arguments
       icon ?= ''
       if children?.length
@@ -18,6 +18,7 @@ module.exports =
               @span outlet: 'label', class: "icon #{icon}", label
               @span class: 'status-ignored', "(#{command})" if command
               @span class: 'highlight', 'ReadOnly' if enabled is false
+              @span class: 'highlight', 'Hidden' if visible is false
           @ul class: 'list-tree', =>
             for child in children
               #console.log 'TreeNode.content 2', arguments, child, children
@@ -31,6 +32,7 @@ module.exports =
             @span outlet: 'label', class: "icon #{icon}", label
             @span class: 'status-ignored', "(#{command})" if command
             @span class: 'highlight', 'Readonly' if enabled is false
+            @span class: 'highlight', 'Hidden' if visible is false
 
     initialize: (item, options={}) ->
       #console.log 'TreeNode.initialize', arguments
