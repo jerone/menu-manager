@@ -7,6 +7,7 @@
 * :sparkles: MenuManager is now a singleton and serialized;
 * :sparkles: Separators are now horizontal lines;
 * :sparkles: Show commands;
+* :sparkles: Added icons;
 
 ## 0.2.0
 * :sparkles: Added collapsible headers;

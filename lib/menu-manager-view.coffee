@@ -13,12 +13,12 @@ class MenuManagerView extends ScrollView
     @div class: 'menu-manager pane-item', =>
       @button outlet: 'toggleAllButton', class: 'btn btn-toggle-all', 'Collapse/Expand All Sections'
       @section class: 'bordered', =>
-        @h1 class: 'section-heading', 'Menu Manager'
+        @h1 class: 'block section-heading icon icon-checklist', 'Menu Manager'
         @p 'Menu Manager shows main menu items and all context menu items from Atom.'
       @menuSection 'main-menu', 'Main Menu', ->
           (new MenuItem item for item in atom.menu.template)
         , ->
-          @h1 class: 'section-heading', click: 'toggle', 'Main Menu'
+          @h1 class: 'block section-heading icon icon-checklist', click: 'toggle', 'Main Menu'
           @p 'Double-click menu item to execute the command.'
           @ul outlet: 'noResultsElement', class: 'background-message centered', =>
             @li 'No Results'
@@ -26,7 +26,7 @@ class MenuManagerView extends ScrollView
       @menuSection 'context-menu', 'Context Menu', ->
           (new MenuItem item for item in atom.contextMenu.itemSets)
         , ->
-          @h1 class: 'section-heading', click: 'toggle', 'Context Menu'
+          @h1 class: 'block section-heading icon icon-checklist', click: 'toggle', 'Context Menu'
           @p 'Double-click context-menu item to execute the command.'
           @ul outlet: 'noResultsElement', class: 'background-message centered', =>
             @li 'No Results'
@@ -55,6 +55,7 @@ class MenuManagerView extends ScrollView
 
   getURI: -> @uri
   getTitle: -> "Menu Manager"
+  getIconName: -> "checklist"
   onDidChangeTitle: (cb) -> new Disposable ->
   onDidChangeModified: (cb) -> new Disposable ->
   isEqual: (other) -> other instanceof MenuManagerView
