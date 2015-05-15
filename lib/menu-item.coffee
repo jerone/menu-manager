@@ -18,7 +18,7 @@ class MenuItem
 acceleratorForCommand = (command, selector) ->
   binding = atom.keymaps.findKeyBindings
     command: command
-    target: selector and document.querySelector selector 
+    target: selector and document.querySelector selector
   keystroke = binding?[0]?.keystrokes
   return null unless keystroke
 

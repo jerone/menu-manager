@@ -16,23 +16,23 @@ class MenuManagerView extends ScrollView
         @h1 class: 'block section-heading icon icon-checklist', 'Menu Manager'
         @p 'Menu Manager shows main menu items and all context menu items from Atom.'
       @menuSection 'main-menu', 'Main Menu', (item) ->
-          substituteVersion = (item) ->
-            item.label = "Version #{atom.appVersion}" if item.label is 'VERSION'
-          (new MenuItem item, substituteVersion for item in atom.menu.template)
-        , ->
-          @h1 class: 'block section-heading icon icon-checklist', click: 'toggle', 'Main Menu'
-          @p 'Double-click menu item to execute the command.'
-          @ul outlet: 'noResultsElement', class: 'background-message centered', =>
-            @li 'No Results'
-          @div outlet: 'treeViewElement'
+        substituteVersion = (item) ->
+          item.label = "Version #{atom.appVersion}" if item.label is 'VERSION'
+        (new MenuItem item, substituteVersion for item in atom.menu.template)
+      , ->
+        @h1 class: 'block section-heading icon icon-checklist', click: 'toggle', 'Main Menu'
+        @p 'Double-click menu item to execute the command.'
+        @ul outlet: 'noResultsElement', class: 'background-message centered', =>
+          @li 'No Results'
+        @div outlet: 'treeViewElement'
       @menuSection 'context-menu', 'Context Menu', ->
-          (new MenuItem item for item in atom.contextMenu.itemSets)
-        , ->
-          @h1 class: 'block section-heading icon icon-checklist', click: 'toggle', 'Context Menu'
-          @p 'Double-click context-menu item to execute the command.'
-          @ul outlet: 'noResultsElement', class: 'background-message centered', =>
-            @li 'No Results'
-          @div outlet: 'treeViewElement'
+        (new MenuItem item for item in atom.contextMenu.itemSets)
+      , ->
+        @h1 class: 'block section-heading icon icon-checklist', click: 'toggle', 'Context Menu'
+        @p 'Double-click context-menu item to execute the command.'
+        @ul outlet: 'noResultsElement', class: 'background-message centered', =>
+          @li 'No Results'
+        @div outlet: 'treeViewElement'
 
   @menuSections: {}
   @menuSection: (name, title, menu, contentFn) ->
