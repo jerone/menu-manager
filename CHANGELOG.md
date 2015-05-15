@@ -4,6 +4,7 @@
 * :sparkles: Highlight hidden items
 * :sparkles: More native feel with no text selection;
 * :art: Normalized keystrokes;
+* :art: No pointer on description header;
 
 ## v0.3.0
 * :bug: Detect if first section was collapsed before collapsing all sections;
