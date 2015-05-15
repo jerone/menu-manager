@@ -2,6 +2,7 @@
 * :sparkles: Substitute version;
 * :sparkles: Highlight readonly items;
 * :sparkles: Highlight hidden items
+* :sparkles: More native feel with no text selection;
 * :art: Normalized keystrokes;
 
 ## v0.3.0
