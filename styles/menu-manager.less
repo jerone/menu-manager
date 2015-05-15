@@ -16,7 +16,16 @@
 
 	& > section {
 		padding: 20px;
-		&:not(:first-of-type) h1 {
+		&.intro {
+			border-top: 0 none;
+			h1 {
+				cursor: default;
+			}
+			p:last-child {
+				margin-bottom: 0;
+			}
+		}
+		h1 {
 			cursor: pointer;
 		}
 		h2 {
@@ -29,9 +38,6 @@
 			display: inline-block;
 			margin: 0 0 0.3em;
 			width: 100%;
-		}
-		p:last-child {
-			margin-bottom: 0;
 		}
 		&.collapsed {
 			> .section-heading {

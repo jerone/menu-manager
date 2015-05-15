@@ -12,7 +12,7 @@ class MenuManagerView extends ScrollView
     #console.log 'MenuManagerView.@content'
     @div class: 'menu-manager pane-item', =>
       @button outlet: 'toggleAllButton', class: 'btn btn-toggle-all', 'Collapse/Expand All Sections'
-      @section class: 'bordered', =>
+      @section class: 'bordered intro', =>
         @h1 class: 'block section-heading icon icon-checklist', 'Menu Manager'
         @p 'Menu Manager shows main menu items and all context menu items from Atom.'
       @menuSection 'main-menu', 'Main Menu', (item) ->
