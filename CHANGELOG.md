@@ -1,4 +1,4 @@
-## vNext
+## v0.4.0
 * :sparkles: Substitute version;
 * :sparkles: Highlight readonly items;
 * :sparkles: Highlight hidden items
