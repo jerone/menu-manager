@@ -8,7 +8,10 @@
     "main menu",
     "context menu",
     "contextmenu",
-    "command"
+    "command",
+    "keybinding",
+    "shortcut",
+    "accelerator"
   ],
   "homepage": "https://github.com/jerone/menu-manager",
   "author": {
