@@ -18,6 +18,12 @@ class MenuTreeView extends View
       if item.command and selector = @getActiveElement item, node
         item.created.call item if item.created
         atom.commands.dispatch selector, item.command, item.commandDetail
+    @treeView.onCopy ({item, node}) =>
+      #console.log 'MenuTreeView.@treeView.onCopy', arguments
+      {label, selector, command, keystroke, type, enabled, visible} = item
+      copy = {label, selector, command, keystroke, type, enabled, visible}
+      text = JSON.stringify copy
+      atom.clipboard.write text
     process.nextTick =>
       menu = menuFn()
       @noResultsElement?.toggle menu.length is 0

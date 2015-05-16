@@ -1,15 +1,19 @@
-'context-menu': []
-'menu': [
+menu: [
   {
-    'label': 'Packages'
-    'submenu': [
-      'label': 'Menu Manager'
-      'submenu': [
+    label: 'Packages'
+    submenu: [
+      label: 'Menu Manager'
+      submenu: [
         {
-          'label': 'Show'
-          'command': 'menu-manager:show'
+          label: 'Show'
+          command: 'menu-manager:show'
         }
       ]
     ]
   }
 ]
+'context-menu': {
+  '.menu-manager .list-item': [
+    { label: '&Copy', command: 'menu-manager:copy' }
+  ]
+}

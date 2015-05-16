@@ -47,6 +47,7 @@ module.exports =
 
       @on 'dblclick', @dblClickItem
       @on 'click', @clickItem
+      atom.commands.add @element, 'menu-manager:copy', @copyItem
 
     setCollapsed: ->
       @toggleClass 'collapsed' if @item.children?.length
@@ -66,6 +67,12 @@ module.exports =
         for child in @item.children
           child.view.onSelect callback
 
+    onCopy: (callback) ->
+      @emitter.on 'on-copy', callback
+      if @item.children?.length
+        for child in @item.children
+          child.view.onCopy callback
+
     clickItem: (event) =>
       if @item.children?.length
         selected = @hasClass 'selected'
@@ -83,6 +90,12 @@ module.exports =
 
     dblClickItem: (event) =>
       @emitter.emit 'on-dbl-click', {node: @, @item}
+      return false
+
+    copyItem: (event) =>
+      #console.log 'TreeNode.copyItem', arguments, this
+      @emitter.emit 'on-copy', {node: @, @item}
+      event.stopPropagation()
       return false
 
 
@@ -104,6 +117,9 @@ module.exports =
     onDblClick: (callback) =>
       @emitter.on 'on-dbl-click', callback
 
+    onCopy: (callback) =>
+      @emitter.on 'on-copy', callback
+
     setRoot: (root, ignoreRoot=false) ->
       rootNode = @rootNode = new TreeNode root, @options
 
@@ -114,6 +130,8 @@ module.exports =
         @clearSelect()
         node.setSelected()
         @emitter.emit 'on-select', {node, item}
+      @rootNode.onCopy ({node, item}) =>
+        @emitter.emit 'on-copy', {node, item}
 
       @root.empty()
       @root.append $$ ->
