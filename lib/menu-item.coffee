@@ -4,7 +4,9 @@ class MenuItem
     #console.log 'MenuItem.constructor', arguments
     @label ?= @selector
 
-    @keystroke = acceleratorForCommand @command, @selector if @command?
+    if @command?
+      accelerator = acceleratorForCommand @command, @selector
+      @keystroke = accelerator if accelerator?
 
     if submenu?.length > 0 or items?.length > 0
       @children = []
