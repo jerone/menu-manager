@@ -1,7 +1,7 @@
 {
   "name": "menu-manager",
   "main": "./lib/menu-manager",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Menu Manager shows main menu items and all context menu items from Atom.",
   "keywords": [
     "menu",
@@ -10,6 +10,7 @@
     "contextmenu",
     "command",
     "keybinding",
+    "keystroke",
     "shortcut",
     "accelerator"
   ],
