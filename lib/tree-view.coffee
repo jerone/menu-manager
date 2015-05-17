@@ -45,8 +45,8 @@ module.exports =
         @label.html item.label?.replace /&(\D)/, (match, group) ->
           "<u>#{group}</u>"
 
+      @on 'mousedown', @clickItem
       @on 'dblclick', @dblClickItem
-      @on 'click', @clickItem
       atom.commands.add @element, 'menu-manager:copy', @copyItem
 
     setCollapsed: ->
@@ -55,17 +55,17 @@ module.exports =
     setSelected: ->
       @addClass 'selected'
 
-    onDblClick: (callback) ->
-      @emitter.on 'on-dbl-click', callback
-      if @item.children?.length
-        for child in @item.children
-          child.view.onDblClick callback
-
     onSelect: (callback) ->
       @emitter.on 'on-select', callback
       if @item.children?.length
         for child in @item.children
           child.view.onSelect callback
+
+    onDblClick: (callback) ->
+      @emitter.on 'on-dbl-click', callback
+      if @item.children?.length
+        for child in @item.children
+          child.view.onDblClick callback
 
     onCopy: (callback) ->
       @emitter.on 'on-copy', callback
@@ -76,7 +76,7 @@ module.exports =
     clickItem: (event) =>
       if @item.children?.length
         selected = @hasClass 'selected'
-        @removeClass 'selected'
+        @removeClass 'selected' # Remove class to make collapse/expand work
         $target = @find '.list-item:first'
         left = $target.position().left
         right = $target.children('span').position().left
