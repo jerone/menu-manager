@@ -1,3 +1,6 @@
+## vNext
+* :sparkles: Highlight dev mode items;
+
 ## v0.4.1
 * :sparkles: Added copy to menu item;
 * :bug: Select earlier;
