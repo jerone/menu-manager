@@ -5,7 +5,7 @@
 
 module.exports =
   TreeNode: class TreeNode extends View
-    @content: ({label, icon, children, keystroke, type, command, enabled, visible, devMode}, options={}) ->
+    @content: ({label, icon, children, keystroke, type, command, enabled, visible, checked, devMode}, options={}) ->
       #console.log 'TreeNode.content', arguments
       icon ?= ''
       if children?.length
@@ -15,6 +15,8 @@ module.exports =
             if type is 'separator'
               @hr outlet: 'label'
             else
+              @span outlet: 'label', class: 'icon menu-manager-ionicons ion-android-radio-button-off' if type is 'radio' and not checked
+              @span outlet: 'label', class: 'icon menu-manager-ionicons ion-android-radio-button-on' if type is 'radio' and checked
               @span outlet: 'label', class: "icon #{icon}", label
               @span class: 'status-ignored', "(#{command})" if command
               @span class: 'highlight', 'ReadOnly' if enabled is false
@@ -30,6 +32,8 @@ module.exports =
           if type is 'separator'
             @hr outlet: 'label'
           else
+            @span outlet: 'label', class: 'icon menu-manager-ionicons ion-android-radio-button-off' if type is 'radio' and not checked
+            @span outlet: 'label', class: 'icon menu-manager-ionicons ion-android-radio-button-on' if type is 'radio' and checked
             @span outlet: 'label', class: "icon #{icon}", label
             @span class: 'status-ignored', "(#{command})" if command
             @span class: 'highlight', 'Readonly' if enabled is false
