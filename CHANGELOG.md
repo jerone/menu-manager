@@ -1,5 +1,6 @@
 ## vNext
 * :sparkles: Highlight dev mode items;
+* :sparkles: Added type radio;
 
 ## v0.4.1
 * :sparkles: Added copy to menu item;
