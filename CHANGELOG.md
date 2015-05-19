@@ -1,6 +1,7 @@
 ## vNext
 * :sparkles: Highlight dev mode items;
 * :sparkles: Added type radio;
+* :art: Ellipsis text overflow;
 
 ## v0.4.1
 * :sparkles: Added copy to menu item;
