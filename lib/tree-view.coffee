@@ -5,7 +5,8 @@
 
 module.exports =
   TreeNode: class TreeNode extends View
-    @content: ({label, icon, children, keystroke, type, command, enabled, visible, checked, devMode}, options={}) ->
+    @content: ({label, icon, children, keystroke, type, command,
+                enabled, visible, checked, devMode}, options={}) ->
       #console.log 'TreeNode.content', arguments
       icon ?= ''
       if children?.length
