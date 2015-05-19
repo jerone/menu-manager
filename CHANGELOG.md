@@ -1,4 +1,4 @@
-## vNext
+## v0.4.2
 * :sparkles: Highlight dev mode items;
 * :sparkles: Added type radio;
 * :art: Ellipsis text overflow;
