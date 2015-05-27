@@ -1,3 +1,6 @@
+## vNext
+* :sparkles: Added button to toolbar;
+
 ## v0.4.2
 * :sparkles: Highlight dev mode items;
 * :sparkles: Added type radio;

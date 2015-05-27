@@ -38,5 +38,15 @@
   "devDependencies": {
     "coffeelint": "^1.9.6"
   },
+  "package-dependencies": {
+    "tool-bar": "^0.1.0"
+  },
+  "consumedServices": {
+    "tool-bar": {
+      "versions": {
+        "^0.1.0": "consumeToolBar"
+      }
+    }
+  },
   "private": true
 }

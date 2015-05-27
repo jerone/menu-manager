@@ -15,3 +15,7 @@
 ```
 apm install menu-manager
 ```
+
+### Settings
+
+* Toggle [tool-bar](https://github.com/suda/tool-bar) button.
