@@ -1,4 +1,4 @@
-## vNext
+## v0.4.3
 * :sparkles: Added button to toolbar;
 
 ## v0.4.2
