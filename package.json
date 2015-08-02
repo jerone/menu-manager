@@ -36,7 +36,7 @@
     "event-kit": "^1.2.0"
   },
   "devDependencies": {
-    "coffeelint": "^1.9.7"
+    "coffeelint": "^1.10.1"
   },
   "package-dependencies": {
     "tool-bar": "^0.1.0"
