@@ -1,3 +1,6 @@
+## v0.4.4
+* :bug: Making sure label is really an string. Fixes #3
+
 ## v0.4.3
 * :sparkles: Added button to toolbar;
 
