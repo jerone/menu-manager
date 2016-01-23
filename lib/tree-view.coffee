@@ -49,8 +49,10 @@ module.exports =
 
       if options.useMnemonic and item.type isnt 'separator'
         #console.log 'TreeNode.initialize', item.label, arguments
-        @label.html item.label?.replace /&(\D)/, (match, group) ->
-          "<u>#{group}</u>"
+        if typeof item.label is 'string' and item.label isnt ''
+          @label.html item.label.replace /&(\D)/, (match, group) ->
+            "<u>#{group}</u>"
+        else @label.html '<i>&lt;no label&gt;</i>'
 
       @on 'mousedown', @clickItem
       @on 'dblclick', @dblClickItem
