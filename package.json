@@ -1,52 +1,52 @@
 {
-  "name": "menu-manager",
-  "main": "./lib/menu-manager",
-  "version": "0.4.4",
-  "description": "Menu Manager shows main menu items and all context menu items from Atom.",
-  "keywords": [
-    "menu",
-    "main menu",
-    "context menu",
-    "contextmenu",
-    "command",
-    "keybinding",
-    "keystroke",
-    "shortcut",
-    "accelerator"
-  ],
-  "homepage": "https://github.com/jerone/menu-manager",
-  "author": {
-    "name": "Jeroen van Warmerdam",
-    "email": "jeronevw@hotmail.com",
-    "url": "https://github.com/jerone"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:jerone/menu-manager.git"
-  },
-  "bugs": {
-    "url": "https://github.com/jerone/menu-manager/issues"
-  },
-  "license": "MIT",
-  "engines": {
-    "atom": ">=0.174.0 <2.0.0"
-  },
-  "dependencies": {
-    "atom-space-pen-views": "^2.0.5",
-    "event-kit": "^1.2.0"
-  },
-  "devDependencies": {
-    "coffeelint": "^1.10.1"
-  },
-  "package-dependencies": {
-    "tool-bar": "^0.1.0"
-  },
-  "consumedServices": {
-    "tool-bar": {
-      "versions": {
-        "^0.1.0": "consumeToolBar"
-      }
-    }
-  },
-  "private": true
+	"name": "menu-manager",
+	"version": "0.4.4",
+	"description": "Menu Manager shows main menu items and all context menu items from Atom.",
+	"keywords": [
+		"menu",
+		"main menu",
+		"context menu",
+		"contextmenu",
+		"command",
+		"keybinding",
+		"keystroke",
+		"shortcut",
+		"accelerator"
+	],
+	"homepage": "https://github.com/jerone/menu-manager",
+	"bugs": {
+		"url": "https://github.com/jerone/menu-manager/issues"
+	},
+	"license": "MIT",
+	"author": {
+		"name": "Jeroen van Warmerdam",
+		"url": "https://github.com/jerone",
+		"email": "jeronevw@hotmail.com"
+	},
+	"main": "./lib/menu-manager",
+	"repository": {
+		"type": "git",
+		"url": "git@github.com:jerone/menu-manager.git"
+	},
+	"dependencies": {
+		"atom-space-pen-views": "^2.2.0",
+		"event-kit": "^2.0.0"
+	},
+	"devDependencies": {
+		"coffeelint": "^1.15.0"
+	},
+	"engines": {
+		"atom": ">=0.174.0 <2.0.0"
+	},
+	"private": true,
+	"package-dependencies": {
+		"tool-bar": "^0.1.0"
+	},
+	"consumedServices": {
+		"tool-bar": {
+			"versions": {
+				"^0.1.0": "consumeToolBar"
+			}
+		}
+	}
 }
