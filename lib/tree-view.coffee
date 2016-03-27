@@ -53,56 +53,56 @@ module.exports =
             "<u>#{group}</u>"
         else @label.html '<i>&lt;no label&gt;</i>'
 
-      @on 'mousedown', @clickItem
-      @on 'dblclick', @dblClickItem
-      atom.commands.add @element, 'menu-manager:copy', @copyItem
+      @on('mousedown', @clickItem)
+      @on('dblclick', @dblClickItem)
+      atom.commands.add(@element, 'menu-manager:copy', @copyItem)
 
     setCollapsed: ->
-      @toggleClass 'collapsed' if @item.children?.length
+      @toggleClass('collapsed') if @item.children?.length
 
     setSelected: ->
-      @addClass 'selected'
+      @addClass('selected')
 
     onSelect: (callback) ->
-      @emitter.on 'on-select', callback
+      @emitter.on('on-select', callback)
       if @item.children?.length
         for child in @item.children
-          child.view.onSelect callback
+          child.view.onSelect(callback)
 
     onDblClick: (callback) ->
-      @emitter.on 'on-dbl-click', callback
+      @emitter.on('on-dbl-click', callback)
       if @item.children?.length
         for child in @item.children
-          child.view.onDblClick callback
+          child.view.onDblClick(callback)
 
     onCopy: (callback) ->
-      @emitter.on 'on-copy', callback
+      @emitter.on('on-copy', callback)
       if @item.children?.length
         for child in @item.children
-          child.view.onCopy callback
+          child.view.onCopy(callback)
 
     clickItem: (event) =>
       if @item.children?.length
-        selected = @hasClass 'selected'
-        @removeClass 'selected' # Remove class to make collapse/expand work
-        $target = @find '.list-item:first'
+        selected = @hasClass('selected')
+        @removeClass('selected') # Remove class to make collapse/expand work
+        $target = @find('.list-item:first')
         left = $target.position().left
         right = $target.children('span').position().left
         width = right - left
-        @toggleClass 'collapsed' if event.offsetX <= width
-        @addClass 'selected' if selected
+        @toggleClass('collapsed') if event.offsetX <= width
+        @addClass('selected') if selected
         return false if event.offsetX <= width
 
-      @emitter.emit 'on-select', {node: @, @item}
+      @emitter.emit('on-select', {node: @, @item})
       return false
 
     dblClickItem: (event) =>
-      @emitter.emit 'on-dbl-click', {node: @, @item}
+      @emitter.emit('on-dbl-click', {node: @, @item})
       return false
 
     copyItem: (event) =>
       #console.log 'TreeNode.copyItem', arguments, this
-      @emitter.emit 'on-copy', {node: @, @item}
+      @emitter.emit('on-copy', {node: @, @item})
       event.stopPropagation()
       return false
 
@@ -120,26 +120,26 @@ module.exports =
       @remove()
 
     onSelect: (callback) =>
-      @emitter.on 'on-select', callback
+      @emitter.on('on-select', callback)
 
     onDblClick: (callback) =>
-      @emitter.on 'on-dbl-click', callback
+      @emitter.on('on-dbl-click', callback)
 
     onCopy: (callback) =>
-      @emitter.on 'on-copy', callback
+      @emitter.on('on-copy', callback)
 
     setRoot: (root, ignoreRoot=false) ->
-      rootNode = @rootNode = new TreeNode root, @options
+      @rootNode = new TreeNode(root, @options)
 
       @rootNode.onDblClick ({node, item}) =>
         node.setCollapsed()
-        @emitter.emit 'on-dbl-click', {node, item}
+        @emitter.emit('on-dbl-click', {node, item})
       @rootNode.onSelect ({node, item}) =>
         @clearSelect()
         node.setSelected()
-        @emitter.emit 'on-select', {node, item}
+        @emitter.emit('on-select', {node, item})
       @rootNode.onCopy ({node, item}) =>
-        @emitter.emit 'on-copy', {node, item}
+        @emitter.emit('on-copy', {node, item})
 
       @root.empty()
       @root.append $$ ->
@@ -147,15 +147,15 @@ module.exports =
           if ignoreRoot
             if root.children?.length
               for child in root.children
-                @subview 'child', child.view
+                @subview('child', child.view)
           else
-            @subview 'root', rootNode
+            @subview('root', root.view)
 
     traversal: (root, doing) =>
       doing(root.item)
       if root.item.children?.length
         for child in root.item.children
-          @traversal child.view, doing
+          @traversal(child.view, doing)
 
     toggleTypeVisible: (type) =>
       @traversal @rootNode, (item) ->
@@ -166,10 +166,10 @@ module.exports =
       @traversal @rootNode, (item) ->
         item.children?.sort (a, b) ->
           if ascending
-            return a.name.localeCompare b.name
+            return a.name.localeCompare(b.name)
           else
-            return b.name.localeCompare a.name
-      @setRoot @rootNode.item
+            return b.name.localeCompare(a.name)
+      @setRoot(@rootNode.item)
 
     sortByRow: (ascending=true) =>
       @traversal @rootNode, (item) ->
@@ -178,10 +178,10 @@ module.exports =
             return a.position.row - b.position.row
           else
             return b.position.row - a.position.row
-      @setRoot @rootNode.item
+      @setRoot(@rootNode.item)
 
     clearSelect: ->
-      $('.list-selectable-item').removeClass 'selected'
+      $('.list-selectable-item').removeClass('selected')
 
     select: (item) ->
       @clearSelect()

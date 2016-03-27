@@ -29,8 +29,8 @@ module.exports =
     @subscriptions.dispose()
 
   consumeToolBar: (toolBar) ->
-    @toolBar = toolBar 'menu-manager'
-    @showButton() if atom.config.get 'menu-manager.showButton'
+    @toolBar = toolBar('menu-manager')
+    @showButton() if atom.config.get('menu-manager.showButton')
 
   showButton: ->
     @toolBar?.addButton
