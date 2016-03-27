@@ -5,6 +5,15 @@ MenuTreeView = require './menu-tree-view'
 
 substituteVersion = (item) ->
   item.label = "Version #{atom.appVersion}" if item.label is 'VERSION'
+  substituteVersion(subitem) for subitem in item.children if item.children?.length
+  item
+
+getMainMenu = ->
+  menu = (new MenuItem(item) for item in atom.menu.template)
+  substituteVersion(item) for item in menu
+
+getContextMenu = ->
+  new MenuItem(item) for item in atom.contextMenu.itemSets
 
 module.exports = class MenuManagerView extends ScrollView
   @deserialize: (state) ->
@@ -17,17 +26,13 @@ module.exports = class MenuManagerView extends ScrollView
       @section class: 'bordered intro', =>
         @h1 class: 'block section-heading icon icon-checklist', 'Menu Manager'
         @p 'Menu Manager shows main menu items and all context menu items from Atom.'
-      @menuSection 'main-menu', 'Main Menu', (item) ->
-        new MenuItem(item, substituteVersion) for item in atom.menu.template
-      , ->
+      @menuSection 'main-menu', 'Main Menu', getMainMenu, ->
         @h1 class: 'block section-heading icon icon-checklist', click: 'toggle', 'Main Menu'
         @p 'Double-click menu item to execute the command.'
         @ul outlet: 'noResultsElement', class: 'background-message centered', =>
           @li 'No Results'
         @div outlet: 'treeViewElement'
-      @menuSection 'context-menu', 'Context Menu', ->
-        new MenuItem(item) for item in atom.contextMenu.itemSets
-      , ->
+      @menuSection 'context-menu', 'Context Menu', getContextMenu, ->
         @h1 class: 'block section-heading icon icon-checklist', click: 'toggle', 'Context Menu'
         @p 'Double-click context-menu item to execute the command.'
         @ul outlet: 'noResultsElement', class: 'background-message centered', =>

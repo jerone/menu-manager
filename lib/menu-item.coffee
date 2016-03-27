@@ -1,6 +1,6 @@
 module.exports =
 class MenuItem
-  constructor: ({@label, @selector, @command, @created, @type, @enabled, @visible, @checked, @devMode, submenu, items}, fn) ->
+  constructor: ({@label, @selector, @command, @created, @type, @enabled, @visible, @checked, @devMode, submenu, items}) ->
     #console.log 'MenuItem.constructor', arguments
 
     @label ?= @selector
@@ -13,9 +13,7 @@ class MenuItem
       @children = []
       for subItem in submenu or items
         subItem.selector ?= @selector
-        @children.push(new MenuItem(subItem, fn))
-
-    fn?(@)
+        @children.push(new MenuItem(subItem))
 
 # https://github.com/atom/atom/blob/master/src/browser/application-menu.coffee#L160
 acceleratorForCommand = (command, selector) ->
