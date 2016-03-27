@@ -15,9 +15,10 @@ module.exports =
             if type is 'separator'
               @hr outlet: 'label'
             else
-              @span outlet: 'label', class: 'icon menu-manager-ionicons ion-android-radio-button-off' if type is 'radio' and not checked
-              @span outlet: 'label', class: 'icon menu-manager-ionicons ion-android-radio-button-on' if type is 'radio' and checked
-              @span outlet: 'label', class: "icon #{icon}", label
+              @span class: 'menu-manager-ionicons ion-android-radio-button-off' if type is 'radio' and not checked
+              @span class: 'menu-manager-ionicons ion-android-radio-button-on' if type is 'radio' and checked
+              @span class: "icon #{icon}" if icon
+              @span outlet: 'label', label
               @span class: 'status-ignored', "(#{command})" if command
               @span class: 'highlight', 'ReadOnly' if enabled is false
               @span class: 'highlight', 'Hidden' if visible is false
@@ -25,16 +26,17 @@ module.exports =
           @ul class: 'list-tree', =>
             for child in children
               #console.log 'TreeNode.content 2', arguments, child, children
-              @subview 'child', new TreeNode child, options
+              @subview 'child', new TreeNode(child, options)
       else
         @li class: 'list-item list-selectable-item', =>
           @span class: 'pull-right key-binding', keystroke if keystroke
           if type is 'separator'
             @hr outlet: 'label'
           else
-            @span outlet: 'label', class: 'icon menu-manager-ionicons ion-android-radio-button-off' if type is 'radio' and not checked
-            @span outlet: 'label', class: 'icon menu-manager-ionicons ion-android-radio-button-on' if type is 'radio' and checked
-            @span outlet: 'label', class: "icon #{icon}", label
+            @span class: 'menu-manager-ionicons ion-android-radio-button-off' if type is 'radio' and not checked
+            @span class: 'menu-manager-ionicons ion-android-radio-button-on' if type is 'radio' and checked
+            @span class: "icon #{icon}" if icon
+            @span outlet: 'label', label
             @span class: 'status-ignored', "(#{command})" if command
             @span class: 'highlight', 'Readonly' if enabled is false
             @span class: 'highlight', 'Hidden' if visible is false
