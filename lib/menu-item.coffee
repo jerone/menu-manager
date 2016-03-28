@@ -1,8 +1,9 @@
 module.exports =
 class MenuItem
-  constructor: ({@label, @selector, @command, @created, @type, @enabled, @visible, @checked, @devMode, submenu, items}) ->
+  constructor: ({@label, @sublabel, @selector, @command, @created, @type, @enabled, @visible, @checked, @devMode, submenu, items}) ->
     #console.log 'MenuItem.constructor', arguments
 
+    @label ?= @sublabel
     @label ?= @selector
 
     if @command?

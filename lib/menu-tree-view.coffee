@@ -19,8 +19,8 @@ class MenuTreeView extends View
         atom.commands.dispatch(selector, item.command, item.commandDetail)
     @treeView.onCopy ({item, node}) ->
       #console.log 'MenuTreeView.@treeView.onCopy', arguments
-      clone = ({label, selector, command, keystroke, type, enabled, visible, checked, devMode, children}) ->
-        cloned = {label, selector, command, keystroke, type, enabled, visible, checked, devMode}
+      clone = ({label, sublabel, selector, command, keystroke, type, enabled, visible, checked, devMode, children}) ->
+        cloned = {label, sublabel, selector, command, keystroke, type, enabled, visible, checked, devMode}
         cloned.children = (clone(child) for child in children) if children?.length
         cloned
       copy = clone(item)

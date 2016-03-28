@@ -57,15 +57,29 @@
 		li.list-nested-item > .list-item {
 			line-height: 2.3em;
 		}
-		.selected::before {
-			height: 2.3em;
-		}
-		.list-item {
+		.list-item,
+        .list-nested-item {
 			overflow: hidden;
 			text-overflow: ellipsis;
-		}
-		.list-item span {
-			margin-right: 0.6em;
+
+            &.selected:before {
+    			height: 2.3em;
+    		}
+
+		    span {
+			    margin-right: 0.6em;
+            }
+
+            &.two-lines {
+                &:before {
+                    height: 3.75em;
+                }
+                .secundary-line {
+                    display: block;
+                    line-height: 1em;
+                    padding-bottom: 0.75em;
+                }
+            }
 		}
 	}
 }

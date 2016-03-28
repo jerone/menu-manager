@@ -5,22 +5,25 @@
 
 module.exports =
   TreeNode: class TreeNode extends View
-    @content: ({label, icon, children, keystroke, type, command, enabled, visible, checked, devMode}, options={}) ->
+    @content: ({label, sublabel, icon, children, keystroke, type, command, enabled, visible, checked, devMode}, options={}) ->
       #console.log 'TreeNode.content', arguments
-      @li class: (if children?.length then 'list-nested-item' else 'list-item') + ' list-selectable-item', =>
+      @li class: (if children?.length then 'list-nested-item ' else 'list-item ') + 'list-selectable-item' + (if sublabel then ' two-lines' else ''), =>
         @div class: (if children?.length then 'list-item' else ''), =>
-          @span class: 'pull-right key-binding', keystroke if keystroke
-          if type is 'separator'
-            @hr outlet: 'label'
-          else
-            @span class: 'menu-manager-ionicons ion-android-radio-button-off' if type is 'radio' and not checked
-            @span class: 'menu-manager-ionicons ion-android-radio-button-on' if type is 'radio' and checked
-            @span class: "icon #{icon}" if icon
-            @span outlet: 'label', label
-            @span class: 'status-ignored', "(#{command})" if command
-            @span class: 'highlight', 'ReadOnly' if enabled is false
-            @span class: 'highlight', 'Hidden' if visible is false
-            @span class: 'highlight', 'DEV' if devMode is true
+          @span class: 'primary-line', =>
+            @span class: 'pull-right key-binding', keystroke if keystroke
+            if type is 'separator'
+              @hr outlet: 'label'
+            else
+              @span class: 'menu-manager-ionicons ion-android-radio-button-off' if type is 'radio' and not checked
+              @span class: 'menu-manager-ionicons ion-android-radio-button-on' if type is 'radio' and checked
+              @span class: "icon #{icon}" if icon
+              @span outlet: 'label', label
+              @span class: 'text-subtle', "(#{command})" if command
+              @span class: 'highlight', 'Readonly' if enabled is false
+              @span class: 'highlight-info', 'Hidden' if visible is false
+              @span class: 'highlight-error', 'DEV' if devMode is true
+          if sublabel
+            @span class: 'secundary-line text-subtle text-smaller', sublabel
         if children?.length
           @ul class: 'list-tree', =>
             for child in children
