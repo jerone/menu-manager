@@ -7,28 +7,8 @@ module.exports =
   TreeNode: class TreeNode extends View
     @content: ({label, icon, children, keystroke, type, command, enabled, visible, checked, devMode}, options={}) ->
       #console.log 'TreeNode.content', arguments
-      icon ?= ''
-      if children?.length
-        @li class: 'list-nested-item list-selectable-item', =>
-          @div class: 'list-item', =>
-            @span class: 'pull-right key-binding', keystroke if keystroke
-            if type is 'separator'
-              @hr outlet: 'label'
-            else
-              @span class: 'menu-manager-ionicons ion-android-radio-button-off' if type is 'radio' and not checked
-              @span class: 'menu-manager-ionicons ion-android-radio-button-on' if type is 'radio' and checked
-              @span class: "icon #{icon}" if icon
-              @span outlet: 'label', label
-              @span class: 'status-ignored', "(#{command})" if command
-              @span class: 'highlight', 'ReadOnly' if enabled is false
-              @span class: 'highlight', 'Hidden' if visible is false
-              @span class: 'highlight', 'DEV' if devMode is true
-          @ul class: 'list-tree', =>
-            for child in children
-              #console.log 'TreeNode.content 2', arguments, child, children
-              @subview 'child', new TreeNode(child, options)
-      else
-        @li class: 'list-item list-selectable-item', =>
+      @li class: (if children?.length then 'list-nested-item' else 'list-item') + ' list-selectable-item', =>
+        @div class: (if children?.length then 'list-item' else ''), =>
           @span class: 'pull-right key-binding', keystroke if keystroke
           if type is 'separator'
             @hr outlet: 'label'
@@ -38,9 +18,14 @@ module.exports =
             @span class: "icon #{icon}" if icon
             @span outlet: 'label', label
             @span class: 'status-ignored', "(#{command})" if command
-            @span class: 'highlight', 'Readonly' if enabled is false
+            @span class: 'highlight', 'ReadOnly' if enabled is false
             @span class: 'highlight', 'Hidden' if visible is false
             @span class: 'highlight', 'DEV' if devMode is true
+        if children?.length
+          @ul class: 'list-tree', =>
+            for child in children
+              #console.log 'TreeNode.content 2', arguments, child, children
+              @subview 'child', new TreeNode(child, options)
 
     initialize: (item, options={}) ->
       #console.log 'TreeNode.initialize', arguments
