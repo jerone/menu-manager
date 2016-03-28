@@ -16,7 +16,9 @@
 	}
 
 	& > section {
-		padding: 20px;
+        &, &:last-child {
+            padding: @component-padding * 2;
+        }
 		&.intro {
 			border-top: 0 none;
 			h1 {
