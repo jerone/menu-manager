@@ -61,8 +61,10 @@
 		}
 		.list-item,
         .list-nested-item {
-			overflow: hidden;
-			text-overflow: ellipsis;
+            &, & > div {
+    			overflow: hidden;
+    			text-overflow: ellipsis;
+            }
 
             &.selected:before {
     			height: 2.3em;
@@ -80,6 +82,8 @@
                     display: block;
                     line-height: 1em;
                     padding-bottom: 0.75em;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
                 }
             }
 		}
