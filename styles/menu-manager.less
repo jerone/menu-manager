@@ -16,76 +16,88 @@
 	}
 
 	& > section {
-        &, &:last-child {
-            padding: @component-padding * 2;
-        }
+		&,
+		&:last-child {
+			padding: @component-padding * 2;
+		}
+
 		&.intro {
 			border-top: 0 none;
+
 			h1 {
 				cursor: default;
 			}
+
 			p:last-child {
 				margin-bottom: 0;
 			}
 		}
+
 		h1 {
 			cursor: pointer;
 		}
+
 		h2 {
 			font-size: 1.5em;
 			line-height: 1.2;
 			margin: 1.75em 0 0;
 			color: @text-color-highlight;
 		}
+
 		hr {
 			display: inline-block;
 			margin: 0 0 0.3em;
 			width: 100%;
 		}
+
 		&.collapsed {
 			> .section-heading {
 				display: block;
 				margin: 0;
 				color: @text-color;
 			}
+
 			> * {
-				display: none
+				display: none;
 			}
 		}
 	}
 
 	.list-tree {
-		li:not(.list-nested-item),
-		li.list-nested-item > .list-item {
+		li.list-nested-item > .list-item,
+		li:not(.list-nested-item) {
 			line-height: 2.3em;
 		}
+
 		.list-item,
-        .list-nested-item {
-            &, & > div {
-    			overflow: hidden;
-    			text-overflow: ellipsis;
-            }
+		.list-nested-item {
+			&,
+			& > div {
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
 
-            &.selected:before {
-    			height: 2.3em;
-    		}
+			&.selected:before {
+				height: 2.3em;
+			}
 
-		    span {
-			    margin-right: 0.6em;
-            }
+			span {
+				margin-right: 0.6em;
+			}
 
-            &.two-lines {
-                &:before {
-                    height: 3.75em;
-                }
-                .secundary-line {
-                    display: block;
-                    line-height: 1em;
-                    padding-bottom: 0.75em;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                }
-            }
+			&.two-lines {
+				&:before {
+					height: 3.75em;
+				}
+
+				.secundary-line {
+					display: block;
+					line-height: 1em;
+					padding-bottom: 0.75em;
+					overflow: hidden;
+					text-overflow: ellipsis;
+				}
+			}
 		}
 	}
 }
