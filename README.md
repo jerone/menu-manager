@@ -6,16 +6,17 @@
 [![License](http://img.shields.io/github/license/jerone/menu-manager.svg)](https://github.com/jerone/menu-manager/blob/master/LICENSE.md)
 [![Gitter chat](https://img.shields.io/badge/gitter-online-brightgreen.svg)](https://gitter.im/jerone/menu-manager)
 
-[Menu Manager](https://atom.io/packages/menu-manager) shows main menu items and all context menu items from [Atom](https://atom.io).
+[Menu Manager](https://atom.io/packages/menu-manager) shows main menu items
+and all context menu items from [Atom](https://atom.io).
 
 ![A screenshot of your package](https://raw.githubusercontent.com/jerone/menu-manager/master/screenshot.gif)
 
-### Installation
+## Installation
 
-```
+```shell
 apm install menu-manager
 ```
 
-### Settings
+## Settings
 
-* Toggle [tool-bar](https://github.com/suda/tool-bar) button.
+*   Toggle [Tool Bar](https://github.com/suda/tool-bar) button.
