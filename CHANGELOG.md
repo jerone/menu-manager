@@ -4,7 +4,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/) and
 tries to follow the [Keep a CHANGELOG](http://keepachangelog.com) convention.
 
-## [vNext](https://github.com/suda/tool-bar/compare/v0.4.4...master) - Unreleased
+## [vNext](https://github.com/suda/tool-bar/compare/v0.5.0...master) - Unreleased
+
+*   ...
+
+## [v0.5.0](https://github.com/suda/tool-bar/compare/v0.4.4...v0.5.0) - Unreleased
 
 *   :package: :arrow_up: Update dependencies.
 *   :shirt: Fix all linter warnings.
@@ -14,7 +18,7 @@ tries to follow the [Keep a CHANGELOG](http://keepachangelog.com) convention.
 
 ## [v0.4.4](https://github.com/suda/tool-bar/compare/v0.4.3...v0.4.4) - 2016-01-23
 
-*   :bug: Making sure label is really an string. Fixes [#3][].
+*   :bug: Making sure label is an string. Fixes [#3][].
 
 ## [v0.4.3](https://github.com/suda/tool-bar/compare/v0.4.2...v0.4.3) - 2015-08-02
 
