@@ -6,7 +6,7 @@ tries to follow the [Keep a CHANGELOG](http://keepachangelog.com) convention.
 
 ## [vNext](https://github.com/suda/tool-bar/compare/v0.5.0...master) - Unreleased
 
-*   ...
+*   :package: :arrow_up: Update dependencies.
 
 ## [v0.5.0](https://github.com/suda/tool-bar/compare/v0.4.4...v0.5.0) - Unreleased
 
