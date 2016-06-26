@@ -8,6 +8,9 @@ tries to follow the [Keep a CHANGELOG](http://keepachangelog.com) convention.
 
 *   :package: :arrow_up: Update dependencies.
 
+*   :package: :arrow_up: Update tool-bar package provider service.
+Per [suda/tool-bar#141][].
+
 ## [v0.5.0](https://github.com/suda/tool-bar/compare/v0.4.4...v0.5.0) - Unreleased
 
 *   :package: :arrow_up: Update dependencies.
@@ -65,4 +68,5 @@ tries to follow the [Keep a CHANGELOG](http://keepachangelog.com) convention.
 
 *   :clapper: Initial release.
 
+[suda/tool-bar#141]: https://github.com/suda/tool-bar/issues/141
 [#3]: https://github.com/jerone/menu-manager/issues/3
