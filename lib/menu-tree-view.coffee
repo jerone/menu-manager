@@ -36,7 +36,7 @@ class MenuTreeView extends View
       child.view.setCollapsed() for child in @treeView.rootNode.item.children
 
   getActiveElement: (item, node) ->
-    console.log('MenuTreeView.getActiveElement', arguments, item.selector, node.parentView?.item?.selector)
+    #console.log('MenuTreeView.getActiveElement', arguments, item.selector, node.parentView?.item?.selector)
     if selector = item.selector
       document.querySelector(selector)
     else if selector = node.parentView?.item?.selector

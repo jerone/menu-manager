@@ -72,7 +72,7 @@ module.exports =
           child.view.onCopy(callback)
 
     clickItem: (event) =>
-      # console.log 'TreeNode.clickItem', event
+      #console.log 'TreeNode.clickItem', event
       if @item.children?.length and event.which isnt 3
         selected = @hasClass('selected')
         @removeClass('selected') # Remove class to make collapse/expand work
