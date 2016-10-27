@@ -1,8 +1,10 @@
 {CompositeDisposable} = require 'atom'
 MenuManagerURI = 'atom://menu-manager'
+MenuManagerView = null
 
 createMenuManagerView = (state) ->
-  MenuManagerView = require './menu-manager-view'
+  #console.log 'createMenuManagerView', this, arguments
+  MenuManagerView ?= require './menu-manager-view'
   new MenuManagerView(state)
 
 atom.deserializers.add
