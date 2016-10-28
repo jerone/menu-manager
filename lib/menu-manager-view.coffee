@@ -1,5 +1,6 @@
 MenuItem = require './menu-item'
 MenuTreeView = require './menu-tree-view'
+AtomMenuManager = require './atom-menu-manager'
 {Disposable} = require 'atom'
 {$, ScrollView} = require 'atom-space-pen-views'
 
@@ -20,24 +21,28 @@ module.exports = class MenuManagerView extends ScrollView
     new MenuManagerView(state)
 
   @content: ->
-    #console.log 'MenuManagerView.@content'
+    console.log 'MenuManagerView.@content', arguments, this
     @div class: 'menu-manager pane-item', =>
       @button outlet: 'toggleAllButton', class: 'btn btn-toggle-all', 'Collapse/Expand All Sections'
       @section class: 'bordered intro', =>
         @h1 class: 'block section-heading icon icon-checklist', 'Menu Manager'
         @p 'Menu Manager shows main menu items and all context menu items from Atom.'
-      @menuSection 'main-menu', 'Main Menu', getMainMenu, ->
-        @h1 class: 'block section-heading icon icon-checklist', click: 'toggle', 'Main Menu'
-        @p 'Double-click menu item to execute the command.'
-        @ul outlet: 'noResultsElement', class: 'background-message centered', =>
-          @li 'No Results'
-        @div outlet: 'treeViewElement'
-      @menuSection 'context-menu', 'Context Menu', getContextMenu, ->
-        @h1 class: 'block section-heading icon icon-checklist', click: 'toggle', 'Context Menu'
-        @p 'Double-click context-menu item to execute the command.'
-        @ul outlet: 'noResultsElement', class: 'background-message centered', =>
-          @li 'No Results'
-        @div outlet: 'treeViewElement'
+      buildHtml2.call(@)
+
+  buildHtml2 = ->
+    console.log 'MenuManagerView.buildHTML', arguments, this
+    @menuSection 'main-menu', 'Main Menu', getMainMenu, ->
+      @h1 class: 'block section-heading icon icon-checklist', click: 'toggle', 'Main Menu'
+      @p 'Double-click menu item to execute the command.'
+      @ul outlet: 'noResultsElement', class: 'background-message centered', =>
+        @li 'No Results'
+      @div outlet: 'treeViewElement'
+    @menuSection 'context-menu', 'Context Menu', getContextMenu, ->
+      @h1 class: 'block section-heading icon icon-checklist', click: 'toggle', 'Context Menu'
+      @p 'Double-click context-menu item to execute the command.'
+      @ul outlet: 'noResultsElement', class: 'background-message centered', =>
+        @li 'No Results'
+      @div outlet: 'treeViewElement'
 
   @menuSections: {}
   @menuSection: (name, title, menu, contentFn) ->
@@ -46,9 +51,16 @@ module.exports = class MenuManagerView extends ScrollView
 
   initialize: ({@uri}={}) ->
     super
-    #console.log 'MenuManagerView.initialize', MenuManagerView.menuSections
+    # console.log 'MenuManagerView.initialize', MenuManagerView.menuSections
     @append(section) for name, section of MenuManagerView.menuSections
     @toggleAllButton.on('click', @toggleAllSections)
+    @atomMenuManager = new AtomMenuManager()
+    @atomMenuManager.onUpdate =>
+      console.log 'MenuManagerView.atomMenuManager.onUpdate', arguments, this
+      section.remove() for name, section of MenuManagerView.menuSections
+      MenuManagerView.menuSections = []
+      MenuManagerView.render.call(MenuManagerView, buildHtml2)
+      @append(section) for name, section of MenuManagerView.menuSections
 
   toggleAllSections: ->
     firstSection = MenuManagerView.menuSections[Object.keys(MenuManagerView.menuSections)[0]]
