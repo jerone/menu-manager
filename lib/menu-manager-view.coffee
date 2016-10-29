@@ -4,6 +4,40 @@ AtomMenuManager = require './atom-menu-manager'
 {Disposable} = require 'atom'
 {$, ScrollView} = require 'atom-space-pen-views'
 
+timeAgoFromMs = (ms) ->
+  sec = Math.round(ms / 1000)
+  min = Math.round(sec / 60)
+  hr = Math.round(min / 60)
+  day = Math.round(hr / 24)
+  month = Math.round(day / 30)
+  year = Math.round(month / 12)
+  if ms < 0
+    'just now'
+  else if sec < 10
+    'just now'
+  else if sec < 45
+    sec + ' seconds ago'
+  else if sec < 90
+    'a minute ago'
+  else if min < 45
+    min + ' minutes ago'
+  else if min < 90
+    'an hour ago'
+  else if hr < 24
+    hr + ' hours ago'
+  else if hr < 36
+    'a day ago'
+  else if day < 30
+    day + ' days ago'
+  else if day < 45
+    'a month ago'
+  else if month < 12
+    month + ' months ago'
+  else if month < 18
+    'a year ago'
+  else
+    year + ' years ago'
+
 substituteVersion = (item) ->
   item.label = "Version #{atom.appVersion}" if item.label is 'VERSION'
   substituteVersion(subitem) for subitem in item.children if item.children?.length
@@ -25,7 +59,9 @@ module.exports = class MenuManagerView extends ScrollView
     @div class: 'menu-manager pane-item', =>
       @button outlet: 'toggleAllButton', class: 'btn btn-toggle-all', 'Collapse/Expand All Sections'
       @section class: 'bordered intro', =>
-        @h1 class: 'block section-heading icon icon-checklist', 'Menu Manager'
+        @h1 class: 'block section-heading icon icon-checklist', =>
+          @raw 'Menu Manager'
+          @span outlet: 'lastUpdated', class: 'last-updated badge', title: new Date(), 'Last updated: just now'
         @p 'Menu Manager shows main menu items and all context menu items from Atom.'
       buildHtml2.call(@)
 
@@ -50,24 +86,37 @@ module.exports = class MenuManagerView extends ScrollView
     MenuManagerView.menuSections[name] = new MenuTreeView(name, title, menu, contentFn)
 
   initialize: ({@uri}={}) ->
-    super
     # console.log 'MenuManagerView.initialize', MenuManagerView.menuSections
+    super
+
     @append(section) for name, section of MenuManagerView.menuSections
+    @updateLastUpdated()
+    setInterval((=>
+      ms = new Date().getTime() - @lastupdatedDate
+      @lastUpdated.text 'Last updated: ' + timeAgoFromMs(ms)
+      @lastUpdated.attr 'title', new Date(ms)
+    ), 60 * 1000)
+
     @toggleAllButton.on('click', @toggleAllSections)
+
     process.nextTick =>
       @atomMenuManager = new AtomMenuManager()
       @atomMenuManager.onUpdate =>
-        console.log 'MenuManagerView.atomMenuManager.onUpdate', arguments
+        # console.log 'MenuManagerView.atomMenuManager.onUpdate', arguments
         section.remove() for name, section of MenuManagerView.menuSections
         MenuManagerView.menuSections = []
         MenuManagerView.render.call(MenuManagerView, buildHtml2)
         @append(section) for name, section of MenuManagerView.menuSections
+        @updateLastUpdated()
 
   toggleAllSections: ->
     firstSection = MenuManagerView.menuSections[Object.keys(MenuManagerView.menuSections)[0]]
     @toggleAllSectionsState ?= if firstSection.isCollapsed() then 'collapse' else 'expand'
     @toggleAllSectionsState = if @toggleAllSectionsState is 'expand' then 'collapse' else 'expand'
     section[@toggleAllSectionsState]() for name, section of MenuManagerView.menuSections
+
+  updateLastUpdated: ->
+    @lastupdatedDate = new Date().getTime()
 
   serialize: ->
     deserializer: @constructor.name
