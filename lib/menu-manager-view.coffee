@@ -91,11 +91,7 @@ module.exports = class MenuManagerView extends ScrollView
 
     @append(section) for name, section of MenuManagerView.menuSections
     @updateLastUpdated()
-    setInterval((=>
-      ms = new Date().getTime() - @lastupdatedDate
-      @lastUpdated.text 'Last updated: ' + timeAgoFromMs(ms)
-      @lastUpdated.attr 'title', new Date(ms)
-    ), 60 * 1000)
+    setInterval(@updateLastUpdatedElement.bind(this), 60 * 1000)
 
     @toggleAllButton.on('click', @toggleAllSections)
 
@@ -108,6 +104,7 @@ module.exports = class MenuManagerView extends ScrollView
         MenuManagerView.render.call(MenuManagerView, buildHtml2)
         @append(section) for name, section of MenuManagerView.menuSections
         @updateLastUpdated()
+        @updateLastUpdatedElement()
 
   toggleAllSections: ->
     firstSection = MenuManagerView.menuSections[Object.keys(MenuManagerView.menuSections)[0]]
@@ -117,6 +114,11 @@ module.exports = class MenuManagerView extends ScrollView
 
   updateLastUpdated: ->
     @lastupdatedDate = new Date().getTime()
+
+  updateLastUpdatedElement: ->
+    ms = new Date().getTime() - @lastupdatedDate
+    @lastUpdated.text 'Last updated: ' + timeAgoFromMs(ms)
+    @lastUpdated.attr 'title', new Date(ms)
 
   serialize: ->
     deserializer: @constructor.name
