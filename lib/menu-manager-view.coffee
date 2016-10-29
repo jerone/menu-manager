@@ -21,7 +21,7 @@ module.exports = class MenuManagerView extends ScrollView
     new MenuManagerView(state)
 
   @content: ->
-    console.log 'MenuManagerView.@content', arguments, this
+    # console.log 'MenuManagerView.@content', arguments, this
     @div class: 'menu-manager pane-item', =>
       @button outlet: 'toggleAllButton', class: 'btn btn-toggle-all', 'Collapse/Expand All Sections'
       @section class: 'bordered intro', =>
@@ -30,7 +30,7 @@ module.exports = class MenuManagerView extends ScrollView
       buildHtml2.call(@)
 
   buildHtml2 = ->
-    console.log 'MenuManagerView.buildHTML', arguments, this
+    # console.log 'MenuManagerView.buildHTML', arguments, this
     @menuSection 'main-menu', 'Main Menu', getMainMenu, ->
       @h1 class: 'block section-heading icon icon-checklist', click: 'toggle', 'Main Menu'
       @p 'Double-click menu item to execute the command.'
@@ -54,13 +54,14 @@ module.exports = class MenuManagerView extends ScrollView
     # console.log 'MenuManagerView.initialize', MenuManagerView.menuSections
     @append(section) for name, section of MenuManagerView.menuSections
     @toggleAllButton.on('click', @toggleAllSections)
-    @atomMenuManager = new AtomMenuManager()
-    @atomMenuManager.onUpdate =>
-      console.log 'MenuManagerView.atomMenuManager.onUpdate', arguments, this
-      section.remove() for name, section of MenuManagerView.menuSections
-      MenuManagerView.menuSections = []
-      MenuManagerView.render.call(MenuManagerView, buildHtml2)
-      @append(section) for name, section of MenuManagerView.menuSections
+    process.nextTick =>
+      @atomMenuManager = new AtomMenuManager()
+      @atomMenuManager.onUpdate =>
+        console.log 'MenuManagerView.atomMenuManager.onUpdate', arguments
+        section.remove() for name, section of MenuManagerView.menuSections
+        MenuManagerView.menuSections = []
+        MenuManagerView.render.call(MenuManagerView, buildHtml2)
+        @append(section) for name, section of MenuManagerView.menuSections
 
   toggleAllSections: ->
     firstSection = MenuManagerView.menuSections[Object.keys(MenuManagerView.menuSections)[0]]
