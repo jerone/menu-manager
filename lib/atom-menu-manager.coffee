@@ -26,29 +26,30 @@ module.exports = class AtomMenuManager
         @emitter.emit 'on-update', arguments
       ), 1000)
 
-    # @overrideAtomMenuAdd()
-    @overrideAtomMenuUpdate()
+    @overrideAtomMenu()
+    @overrideAtomContextMenu()
 
   # atom.menu.add([{label: 'Hello', submenu : [{label: 'World!', command: 'hello:world'}]}])
-  overrideAtomMenuAdd: ->
-    tmp = atom.menu.add
-    atom.menu.add = =>
-      console.log 'AtomMenuManager::overrideAtomMenuAdd>atom.menu.add', arguments
+  # atom.menu.update()
+  overrideAtomMenu: ->
+    tmp = atom.menu.update
+    atom.menu.update = =>
+      # console.log 'AtomMenuManager::overrideAtomMenu>atom.menu.update', arguments
       rtrn = tmp.apply atom.menu, arguments
       @onUpdateDebounced()
       rtrn
 
-  # atom.menu.update()
-  overrideAtomMenuUpdate: ->
-    tmp = atom.menu.update
-    atom.menu.update = =>
-      console.log 'AtomMenuManager::overrideAtomMenuAdd>atom.menu.update', arguments
-      rtrn = tmp.apply atom.menu, arguments
+  # atom.contextMenu.add({'atom-workspace': [{label: 'Hello World!', command: 'hello:world'}]})
+  overrideAtomContextMenu: ->
+    tmp = atom.contextMenu.add
+    atom.contextMenu.add = =>
+      # console.log 'AtomMenuManager::overrideAtomContextMenu>atom.contextMenu.add', arguments
+      rtrn = tmp.apply atom.contextMenu, arguments
       @onUpdateDebounced()
       rtrn
 
   onUpdate: (callback) =>
-    console.log 'AtomMenuManager::onUpdate', arguments
+    # console.log 'AtomMenuManager::onUpdate', arguments
     @emitter.on 'on-update', callback
 
   dispose: ->
