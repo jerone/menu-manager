@@ -16,8 +16,7 @@ module.exports =
             else
               @span class: 'menu-manager-ionicons ion-android-radio-button-off' if type is 'radio' and not checked
               @span class: 'menu-manager-ionicons ion-android-radio-button-on' if type is 'radio' and checked
-              @span class: "icon #{icon}" if icon
-              @span outlet: 'label', label
+              @span class: "icon #{icon or ''}", outlet: 'label', label
               @span class: 'text-subtle', "(#{command})" if command
               @span class: 'highlight', 'Readonly' if enabled is false
               @span class: 'highlight-info', 'Hidden' if visible is false
