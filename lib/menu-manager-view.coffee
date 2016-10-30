@@ -61,11 +61,11 @@ module.exports = class MenuManagerView extends ScrollView
       @section class: 'bordered intro', =>
         @h1 class: 'block section-heading icon icon-checklist', =>
           @raw 'Menu Manager'
-          @span outlet: 'lastUpdated', class: 'last-updated badge', title: new Date(), 'Last updated: just now'
+          @span outlet: 'lastChecked', class: 'last-checked badge', title: new Date(), 'Last checked: just now'
         @p 'Menu Manager shows main menu items and all context menu items from Atom.'
-      buildHtml2.call(@)
+      MenuManagerView.buildMenuSections.call(@)
 
-  buildHtml2 = ->
+  @buildMenuSections: ->
     # console.log 'MenuManagerView.buildHTML', arguments, this
     @menuSection 'main-menu', 'Main Menu', getMainMenu, ->
       @h1 class: 'block section-heading icon icon-checklist', click: 'toggle', 'Main Menu'
@@ -90,8 +90,8 @@ module.exports = class MenuManagerView extends ScrollView
     super
 
     @append(section) for name, section of MenuManagerView.menuSections
-    @updateLastUpdated()
-    setInterval(@updateLastUpdatedElement.bind(this), 60 * 1000)
+    @updateLastChecked()
+    setInterval(@updateLastCheckedElement.bind(this), 60 * 1000)
 
     @toggleAllButton.on('click', @toggleAllSections)
 
@@ -101,10 +101,10 @@ module.exports = class MenuManagerView extends ScrollView
         # console.log 'MenuManagerView.atomMenuManager.onUpdate', arguments
         section.remove() for name, section of MenuManagerView.menuSections
         MenuManagerView.menuSections = []
-        MenuManagerView.render.call(MenuManagerView, buildHtml2)
+        MenuManagerView.render.call(MenuManagerView, MenuManagerView.buildMenuSections)
         @append(section) for name, section of MenuManagerView.menuSections
-        @updateLastUpdated()
-        @updateLastUpdatedElement()
+        @updateLastChecked()
+        @updateLastCheckedElement()
 
   toggleAllSections: ->
     firstSection = MenuManagerView.menuSections[Object.keys(MenuManagerView.menuSections)[0]]
@@ -112,13 +112,13 @@ module.exports = class MenuManagerView extends ScrollView
     @toggleAllSectionsState = if @toggleAllSectionsState is 'expand' then 'collapse' else 'expand'
     section[@toggleAllSectionsState]() for name, section of MenuManagerView.menuSections
 
-  updateLastUpdated: ->
-    @lastupdatedDate = new Date().getTime()
+  updateLastChecked: ->
+    @lastCheckedDate = new Date().getTime()
 
-  updateLastUpdatedElement: ->
-    ms = new Date().getTime() - @lastupdatedDate
-    @lastUpdated.text 'Last updated: ' + timeAgoFromMs(ms)
-    @lastUpdated.attr 'title', new Date(ms)
+  updateLastCheckedElement: ->
+    ms = new Date().getTime() - @lastCheckedDate
+    @lastChecked.text 'Last checked: ' + timeAgoFromMs(ms)
+    @lastChecked.attr 'title', new Date(ms)
 
   serialize: ->
     deserializer: @constructor.name
