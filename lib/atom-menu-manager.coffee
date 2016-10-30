@@ -26,7 +26,7 @@ module.exports = class AtomMenuManager
         @emitter.emit 'on-update', arguments
       ), 1000)
 
-    @overrideAtomMenuAdd()
+    # @overrideAtomMenuAdd()
     @overrideAtomMenuUpdate()
 
   # atom.menu.add([{label: 'Hello', submenu : [{label: 'World!', command: 'hello:world'}]}])
