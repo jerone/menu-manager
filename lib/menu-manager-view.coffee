@@ -57,7 +57,7 @@ module.exports = class MenuManagerView extends ScrollView
   @content: ->
     # console.log 'MenuManagerView.@content', arguments, this
     @div class: 'menu-manager pane-item', =>
-      @button outlet: 'toggleAllButton', class: 'btn btn-toggle-all', 'Collapse/Expand All Sections'
+      @button outlet: 'toggleAllButton', class: 'btn btn-toggle-all', click: 'toggleAllSections', 'Collapse/Expand All Sections'
       @section class: 'bordered intro', =>
         @h1 class: 'block section-heading icon icon-checklist', =>
           @raw 'Menu Manager'
@@ -83,11 +83,8 @@ module.exports = class MenuManagerView extends ScrollView
     @updateLastChecked()
     setInterval @updateLastCheckedElement.bind(this), 1 * 1000
 
-    @toggleAllButton.on 'click', @toggleAllSections.bind(this)
-
     process.nextTick =>
-      @atomMenuManager = new AtomMenuManager()
-      @atomMenuManager.onUpdate =>
+      new AtomMenuManager().onUpdate =>
         # console.log 'MenuManagerView.atomMenuManager.onUpdate', arguments
         section.update() for section in @getAllSections()
         @updateLastChecked()
