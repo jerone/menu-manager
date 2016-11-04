@@ -7,7 +7,7 @@ class MenuTreeView extends View
     #console.log 'MenuTreeView.@content', arguments
     @section class: 'bordered', 'data-name': name, => contentFn.call(this)
 
-  constructor: (name, title, menuFn, contentFn) ->
+  constructor: (name, @title, @menuFn, contentFn) ->
     super
     #console.log 'MenuTreeView.constructor', arguments, this
     (@treeViewElement or @).append(@treeView = new TreeView(useMnemonic: true))
@@ -26,14 +26,16 @@ class MenuTreeView extends View
       copy = clone(item)
       text = JSON.stringify(copy, null, '  ')
       atom.clipboard.write(text)
-    process.nextTick =>
-      menu = menuFn()
-      @noResultsElement?.toggle(menu.length is 0)
-      @treeView.setRoot
-        label: title,
-        icon: 'icon-file-directory',
-        children: (item for item in menu)
-      child.view.setCollapsed() for child in @treeView.rootNode.item.children
+    process.nextTick => @update()
+
+  update: ->
+    menu = @menuFn()
+    @noResultsElement?.toggle(menu.length is 0)
+    @treeView.setRoot
+      label: @title,
+      icon: 'icon-file-directory',
+      children: (item for item in menu)
+    child.view.setCollapsed() for child in @treeView.rootNode.item.children
 
   getActiveElement: (item, node) ->
     #console.log('MenuTreeView.getActiveElement', arguments, item.selector, node.parentView?.item?.selector)

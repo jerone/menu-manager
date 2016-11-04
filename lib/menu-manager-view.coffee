@@ -63,54 +63,44 @@ module.exports = class MenuManagerView extends ScrollView
           @raw 'Menu Manager'
           @span outlet: 'lastChecked', class: 'last-checked badge', title: new Date(), 'Last checked: just now'
         @p 'Menu Manager shows main menu items and all context menu items from Atom.'
-      MenuManagerView.buildMenuSections.call(@)
-
-  @buildMenuSections: ->
-    # console.log 'MenuManagerView.buildHTML', arguments, this
-    @menuSection 'main-menu', 'Main Menu', getMainMenu, ->
-      @h1 class: 'block section-heading icon icon-checklist', click: 'toggle', 'Main Menu'
-      @p 'Double-click menu item to execute the command.'
-      @ul outlet: 'noResultsElement', class: 'background-message centered', =>
-        @li 'No Results'
-      @div outlet: 'treeViewElement'
-    @menuSection 'context-menu', 'Context Menu', getContextMenu, ->
-      @h1 class: 'block section-heading icon icon-checklist', click: 'toggle', 'Context Menu'
-      @p 'Double-click context-menu item to execute the command.'
-      @ul outlet: 'noResultsElement', class: 'background-message centered', =>
-        @li 'No Results'
-      @div outlet: 'treeViewElement'
-
-  @menuSections: {}
-  @menuSection: (name, title, menu, contentFn) ->
-    #console.log 'MenuManagerView.@menuSection', arguments
-    MenuManagerView.menuSections[name] = new MenuTreeView(name, title, menu, contentFn)
+      @subview 'main-menu', new MenuTreeView 'main-menu', 'Main Menu', getMainMenu, ->
+        @h1 class: 'block section-heading icon icon-checklist', click: 'toggle', 'Main Menu'
+        @p 'Double-click menu item to execute the command.'
+        @ul outlet: 'noResultsElement', class: 'background-message centered', =>
+          @li 'No Results'
+        @div outlet: 'treeViewElement'
+      @subview 'context-menu', new MenuTreeView 'context-menu', 'Context Menu', getContextMenu, ->
+        @h1 class: 'block section-heading icon icon-checklist', click: 'toggle', 'Context Menu'
+        @p 'Double-click context-menu item to execute the command.'
+        @ul outlet: 'noResultsElement', class: 'background-message centered', =>
+          @li 'No Results'
+        @div outlet: 'treeViewElement'
 
   initialize: ({@uri}={}) ->
-    # console.log 'MenuManagerView.initialize', MenuManagerView.menuSections
+    # console.log 'MenuManagerView.initialize', arguments, this
     super
 
-    @append(section) for name, section of MenuManagerView.menuSections
     @updateLastChecked()
-    setInterval(@updateLastCheckedElement.bind(this), 60 * 1000)
+    setInterval @updateLastCheckedElement.bind(this), 1 * 1000
 
-    @toggleAllButton.on('click', @toggleAllSections)
+    @toggleAllButton.on 'click', @toggleAllSections.bind(this)
 
     process.nextTick =>
       @atomMenuManager = new AtomMenuManager()
       @atomMenuManager.onUpdate =>
         # console.log 'MenuManagerView.atomMenuManager.onUpdate', arguments
-        section.remove() for name, section of MenuManagerView.menuSections
-        MenuManagerView.menuSections = []
-        MenuManagerView.render.call(MenuManagerView, MenuManagerView.buildMenuSections)
-        @append(section) for name, section of MenuManagerView.menuSections
+        section.update() for section in @getAllSections()
         @updateLastChecked()
         @updateLastCheckedElement()
 
+  getAllSections: ->
+    [@['main-menu'], @['context-menu']]
+
   toggleAllSections: ->
-    firstSection = MenuManagerView.menuSections[Object.keys(MenuManagerView.menuSections)[0]]
-    @toggleAllSectionsState ?= if firstSection.isCollapsed() then 'collapse' else 'expand'
+    sections = @getAllSections()
+    @toggleAllSectionsState ?= if sections[0].isCollapsed() then 'collapse' else 'expand'
     @toggleAllSectionsState = if @toggleAllSectionsState is 'expand' then 'collapse' else 'expand'
-    section[@toggleAllSectionsState]() for name, section of MenuManagerView.menuSections
+    section[@toggleAllSectionsState]() for section in sections
 
   updateLastChecked: ->
     @lastCheckedDate = new Date().getTime()
