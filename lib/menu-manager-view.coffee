@@ -81,7 +81,7 @@ module.exports = class MenuManagerView extends ScrollView
     super
 
     @updateLastChecked()
-    setInterval @updateLastCheckedElement.bind(this), 1 * 1000
+    setInterval @updateLastCheckedElement.bind(this), 40 * 1000
 
     process.nextTick =>
       new AtomMenuManager().onUpdate =>
