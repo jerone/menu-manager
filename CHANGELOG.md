@@ -6,7 +6,7 @@ tries to follow the [Keep a CHANGELOG](http://keepachangelog.com) convention.
 
 ## [vNext](https://github.com/suda/tool-bar/compare/v0.6.0...master) - Unreleased
 
-*   
+*   :sparkles: Refresh on main-menu or context-menu changes.
 
 ## [v0.6.0](https://github.com/suda/tool-bar/compare/v0.5.0...v0.6.0) - 2016-09-25
 
