@@ -36,7 +36,7 @@
     "coffeelint": "^1.16.0"
   },
   "engines": {
-    "atom": ">=0.174.0 <2.0.0"
+    "atom": ">=1.11.2 <2.0.0"
   },
   "private": true,
   "package-dependencies": {
