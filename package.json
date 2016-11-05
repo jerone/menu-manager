@@ -30,10 +30,10 @@
   },
   "dependencies": {
     "atom-space-pen-views": "^2.2.0",
-    "event-kit": "^2.1.0"
+    "event-kit": "^2.2.0"
   },
   "devDependencies": {
-    "coffeelint": "^1.15.7"
+    "coffeelint": "^1.16.0"
   },
   "engines": {
     "atom": ">=0.174.0 <2.0.0"
