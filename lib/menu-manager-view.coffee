@@ -38,6 +38,7 @@ timeAgoFromMs = (ms) ->
   else
     year + ' years ago'
 
+# https://github.com/atom/atom/blob/e5cfc6b6e4b36b6c443c0526bfb4c816c666b0f2/src/main-process/application-menu.coffee#L86-L88
 substituteVersion = (item) ->
   item.label = "Version #{atom.appVersion}" if item.label is 'VERSION'
   substituteVersion(subitem) for subitem in item.children if item.children?.length
