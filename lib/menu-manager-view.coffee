@@ -1,42 +1,9 @@
 MenuItem = require './menu-item'
 MenuTreeView = require './menu-tree-view'
 AtomMenuManager = require './atom-menu-manager'
+{timeAgoFromMs} = require './helpers'
 {Disposable} = require 'atom'
 {$, ScrollView} = require 'atom-space-pen-views'
-
-timeAgoFromMs = (ms) ->
-  sec = Math.round(ms / 1000)
-  min = Math.round(sec / 60)
-  hr = Math.round(min / 60)
-  day = Math.round(hr / 24)
-  month = Math.round(day / 30)
-  year = Math.round(month / 12)
-  if ms < 0
-    'just now'
-  else if sec < 10
-    'just now'
-  else if sec < 45
-    sec + ' seconds ago'
-  else if sec < 90
-    'a minute ago'
-  else if min < 45
-    min + ' minutes ago'
-  else if min < 90
-    'an hour ago'
-  else if hr < 24
-    hr + ' hours ago'
-  else if hr < 36
-    'a day ago'
-  else if day < 30
-    day + ' days ago'
-  else if day < 45
-    'a month ago'
-  else if month < 12
-    month + ' months ago'
-  else if month < 18
-    'a year ago'
-  else
-    year + ' years ago'
 
 # https://github.com/atom/atom/blob/e5cfc6b6e4b36b6c443c0526bfb4c816c666b0f2/src/main-process/application-menu.coffee#L86-L88
 substituteVersion = (item) ->
