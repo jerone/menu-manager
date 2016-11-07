@@ -30,17 +30,17 @@ module.exports = class MenuManagerView extends ScrollView
         @h1 class: 'icon icon-checklist', =>
           @raw 'Menu Manager'
           @span outlet: 'lastChecked', class: 'last-checked badge', title: new Date(), 'Last checked: just now'
-        @p 'Menu Manager shows application menu items and all context menu items from Atom.'
+        @p 'Menu Manager shows application menu items and context menu items from Atom.'
       @main class: 'menu-manager-sections', =>
         @subview 'application-menu', new MenuTreeView 'application-menu', 'Application Menu', getMainMenu, ->
           @h1 class: 'section-heading', click: 'toggle', 'Application Menu'
-          @p 'Double-click menu item to execute the command.'
+          @p 'Double-click an application menu item to execute the corresponding command.'
           @ul outlet: 'noResultsElement', class: 'background-message centered', =>
             @li 'No Results'
           @div outlet: 'treeViewElement', class: 'menu-tree-view'
         @subview 'context-menu', new MenuTreeView 'context-menu', 'Context Menu', getContextMenu, ->
           @h1 class: 'section-heading', click: 'toggle', 'Context Menu'
-          @p 'Double-click context-menu item to execute the command.'
+          @p 'Double-click a context menu item to execute the corresponding command.'
           @ul outlet: 'noResultsElement', class: 'background-message centered', =>
             @li 'No Results'
           @div outlet: 'treeViewElement', class: 'menu-tree-view'

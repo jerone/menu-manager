@@ -7,9 +7,11 @@
 [![Gitter chat](https://img.shields.io/badge/gitter-online-brightgreen.svg)](https://gitter.im/jerone/menu-manager)
 
 [Menu Manager](https://atom.io/packages/menu-manager) shows application menu items
-and all context menu items from [Atom](https://atom.io).
+and context menu items from [Atom](https://atom.io).
 
-![A screenshot of your package](https://raw.githubusercontent.com/jerone/menu-manager/master/screenshot.gif)
+![Menu Manager screenshot](https://raw.githubusercontent.com/jerone/menu-manager/master/screenshot.gif)
+
+Double-click a menu item to execute the corresponding command.
 
 ## Installation
 
@@ -19,4 +21,4 @@ apm install menu-manager
 
 ## Settings
 
-*   Toggle [Tool Bar](https://github.com/suda/tool-bar) button.
+*   Toggle [Tool Bar](https://github.com/suda/tool-bar) button (optional).

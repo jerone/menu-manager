@@ -1,7 +1,7 @@
 {
   "name": "menu-manager",
   "version": "0.6.0",
-  "description": "Menu Manager shows application menu items and all context menu items from Atom.",
+  "description": "Menu Manager shows application menu items and context menu items from Atom.",
   "keywords": [
     "menu",
     "application menu",
