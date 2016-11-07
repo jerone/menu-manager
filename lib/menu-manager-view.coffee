@@ -25,12 +25,14 @@ module.exports = class MenuManagerView extends ScrollView
   @content: ->
     # console.log 'MenuManagerView.@content', arguments, this
     @div class: 'menu-manager pane-item', =>
-      @button outlet: 'toggleAllButton', class: 'btn btn-toggle-all', click: 'toggleAllSections', 'Collapse/Expand All Sections'
       @header class: 'menu-manager-header', =>
         @h1 class: 'icon icon-checklist', =>
           @raw 'Menu Manager'
           @span outlet: 'lastChecked', class: 'last-checked badge', title: new Date(), 'Last checked: just now'
         @p 'Menu Manager shows application menu items and context menu items from Atom.'
+        @div class: 'menu-manager-controls btn-group', =>
+          @button class: 'btn', click: 'collapseAllSections', 'Collapse All'
+          @button class: 'btn', click: 'expandAllSections', 'Expand All'
       @main class: 'menu-manager-sections', =>
         @subview 'application-menu', new MenuTreeView 'application-menu', 'Application Menu', getMainMenu, ->
           @h1 class: 'section-heading', click: 'toggle', 'Application Menu'
@@ -62,11 +64,13 @@ module.exports = class MenuManagerView extends ScrollView
   getAllSections: ->
     [@['application-menu'], @['context-menu']]
 
-  toggleAllSections: ->
-    sections = @getAllSections()
-    @toggleAllSectionsState ?= if sections[0].isCollapsed() then 'collapse' else 'expand'
-    @toggleAllSectionsState = if @toggleAllSectionsState is 'expand' then 'collapse' else 'expand'
-    section[@toggleAllSectionsState]() for section in sections
+  collapseAllSections: ->
+    for section in @getAllSections()
+      section.collapse()
+
+  expandAllSections: ->
+    for section in @getAllSections()
+      section.expand()
 
   updateLastChecked: ->
     @lastCheckedDate = new Date().getTime()
@@ -81,8 +85,8 @@ module.exports = class MenuManagerView extends ScrollView
     uri: @getURI()
 
   getURI: -> @uri
-  getTitle: -> "Menu Manager"
-  getIconName: -> "checklist"
-  onDidChangeTitle: (cb) -> new Disposable ->
-  onDidChangeModified: (cb) -> new Disposable ->
+  getTitle: -> 'Menu Manager'
+  getIconName: -> 'checklist'
+  onDidChangeTitle: -> new Disposable ->
+  onDidChangeModified: -> new Disposable ->
   isEqual: (other) -> other instanceof MenuManagerView
