@@ -6,7 +6,7 @@ tries to follow the [Keep a CHANGELOG](http://keepachangelog.com) convention.
 
 ## [vNext](https://github.com/jerone/menu-manager/compare/v0.6.0...master) - Unreleased
 
-*   :sparkles: Refresh on main-menu or context-menu changes.
+*   :sparkles: Refresh on application-menu or context-menu changes.
 *   :package: :arrow_up: Update dependencies.
 
 ## [v0.6.0](https://github.com/jerone/menu-manager/compare/v0.5.0...v0.6.0) - 2016-09-25

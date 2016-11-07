@@ -30,10 +30,10 @@ module.exports = class MenuManagerView extends ScrollView
         @h1 class: 'icon icon-checklist', =>
           @raw 'Menu Manager'
           @span outlet: 'lastChecked', class: 'last-checked badge', title: new Date(), 'Last checked: just now'
-        @p 'Menu Manager shows main menu items and all context menu items from Atom.'
+        @p 'Menu Manager shows application menu items and all context menu items from Atom.'
       @main class: 'menu-manager-sections', =>
-        @subview 'main-menu', new MenuTreeView 'main-menu', 'Main Menu', getMainMenu, ->
-          @h1 class: 'section-heading', click: 'toggle', 'Main Menu'
+        @subview 'application-menu', new MenuTreeView 'application-menu', 'Application Menu', getMainMenu, ->
+          @h1 class: 'section-heading', click: 'toggle', 'Application Menu'
           @p 'Double-click menu item to execute the command.'
           @ul outlet: 'noResultsElement', class: 'background-message centered', =>
             @li 'No Results'
@@ -60,7 +60,7 @@ module.exports = class MenuManagerView extends ScrollView
         @updateLastCheckedElement()
 
   getAllSections: ->
-    [@['main-menu'], @['context-menu']]
+    [@['application-menu'], @['context-menu']]
 
   toggleAllSections: ->
     sections = @getAllSections()
