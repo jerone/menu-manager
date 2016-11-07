@@ -26,23 +26,24 @@ module.exports = class MenuManagerView extends ScrollView
     # console.log 'MenuManagerView.@content', arguments, this
     @div class: 'menu-manager pane-item', =>
       @button outlet: 'toggleAllButton', class: 'btn btn-toggle-all', click: 'toggleAllSections', 'Collapse/Expand All Sections'
-      @section class: 'bordered intro', =>
-        @h1 class: 'block section-heading icon icon-checklist', =>
+      @header class: 'menu-manager-header', =>
+        @h1 class: 'icon icon-checklist', =>
           @raw 'Menu Manager'
           @span outlet: 'lastChecked', class: 'last-checked badge', title: new Date(), 'Last checked: just now'
         @p 'Menu Manager shows main menu items and all context menu items from Atom.'
-      @subview 'main-menu', new MenuTreeView 'main-menu', 'Main Menu', getMainMenu, ->
-        @h1 class: 'block section-heading icon icon-checklist', click: 'toggle', 'Main Menu'
-        @p 'Double-click menu item to execute the command.'
-        @ul outlet: 'noResultsElement', class: 'background-message centered', =>
-          @li 'No Results'
-        @div outlet: 'treeViewElement'
-      @subview 'context-menu', new MenuTreeView 'context-menu', 'Context Menu', getContextMenu, ->
-        @h1 class: 'block section-heading icon icon-checklist', click: 'toggle', 'Context Menu'
-        @p 'Double-click context-menu item to execute the command.'
-        @ul outlet: 'noResultsElement', class: 'background-message centered', =>
-          @li 'No Results'
-        @div outlet: 'treeViewElement'
+      @main class: 'menu-manager-sections', =>
+        @subview 'main-menu', new MenuTreeView 'main-menu', 'Main Menu', getMainMenu, ->
+          @h1 class: 'section-heading', click: 'toggle', 'Main Menu'
+          @p 'Double-click menu item to execute the command.'
+          @ul outlet: 'noResultsElement', class: 'background-message centered', =>
+            @li 'No Results'
+          @div outlet: 'treeViewElement', class: 'menu-tree-view'
+        @subview 'context-menu', new MenuTreeView 'context-menu', 'Context Menu', getContextMenu, ->
+          @h1 class: 'section-heading', click: 'toggle', 'Context Menu'
+          @p 'Double-click context-menu item to execute the command.'
+          @ul outlet: 'noResultsElement', class: 'background-message centered', =>
+            @li 'No Results'
+          @div outlet: 'treeViewElement', class: 'menu-tree-view'
 
   initialize: ({@uri}={}) ->
     # console.log 'MenuManagerView.initialize', arguments, this

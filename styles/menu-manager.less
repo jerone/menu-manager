@@ -1,12 +1,15 @@
 @import "ui-variables";
 @import "../resources/ionicons/ionicons";
+@menu-manager-spacing: @component-padding *1.5;
+@menu-manager-bg: darken(@base-background-color, 2%);
 
 .menu-manager {
 	position: relative;
-	overflow: auto;
 	color: @text-color;
 	-webkit-user-select: none;
 	cursor: default;
+	display: flex;
+	flex-direction: column;
 
 	.btn-toggle-all {
 		position: absolute;
@@ -19,92 +22,122 @@
 		margin-left: 1em;
 	}
 
-	& > section {
-		&,
-		&:last-child {
-			padding: @component-padding * 2;
-		}
-
-		&.intro {
-			border-top: 0 none;
-
-			h1 {
-				cursor: default;
-			}
-
-			p:last-child {
-				margin-bottom: 0;
-			}
-		}
+	.menu-manager-header {
+		padding: @menu-manager-spacing;
+		border-bottom: 1px solid @base-border-color;
 
 		h1 {
-			cursor: pointer;
-		}
-
-		h2 {
-			font-size: 1.5em;
-			line-height: 1.2;
-			margin: 1.75em 0 0;
+			font-size: 2em;
+			margin: 0 0 0.5em;
 			color: @text-color-highlight;
 		}
 
-		hr {
-			display: inline-block;
-			margin: 0 0 0.3em;
-			width: 100%;
-		}
+		p {
+			font-size: 1.2em;
 
-		&.collapsed {
-			> .section-heading {
-				display: block;
-				margin: 0;
-				color: @text-color;
-			}
-
-			> * {
-				display: none;
+			&:last-of-type {
+				margin-bottom: 0;
 			}
 		}
 	}
 
-	.list-group .icon::before,
-	.list-tree .icon::before {
-		position: inherit;
-	}
+	.menu-manager-sections {
+		overflow: auto;
+		flex: 1;
 
-	.list-tree {
-		li.list-nested-item > .list-item,
-		li:not(.list-nested-item) {
-			line-height: 2.3em;
-		}
+		> section {
+			background-color: @menu-manager-bg;
+			padding: 0;
+			border-bottom: 1px solid @base-border-color;
+			border-top: none;
 
-		.list-item,
-		.list-nested-item {
-			&,
-			& > div {
-				overflow: hidden;
-				text-overflow: ellipsis;
+			&:last-child {
+				margin-bottom: 0;
 			}
 
-			&.selected:before {
-				height: 2.3em;
-			}
+			&.collapsed {
+				background-color: @base-background-color;
 
-			span {
-				margin-right: 0.6em;
-			}
+				.section-heading {
+					display: block;
+					margin: 0;
+					padding-bottom: @menu-manager-spacing;
+					color: @text-color;
 
-			&.two-lines {
-				&:before {
-					height: 3.75em;
+					&:hover {
+						color: @text-color-highlight;
+						background-color: @background-color-highlight;
+					}
 				}
 
-				.secundary-line {
-					display: block;
-					line-height: 1em;
-					padding-bottom: 0.75em;
-					overflow: hidden;
-					text-overflow: ellipsis;
+				> * {
+					display: none;
+				}
+			}
+
+			.section-heading {
+				padding: @menu-manager-spacing @menu-manager-spacing 0;
+				cursor: pointer;
+				font-weight: normal;
+				font-size: 1.8em;
+				color: @text-color-highlight;
+			}
+
+			p {
+				font-size: 1.1em;
+				margin: 0.5em @menu-manager-spacing 1em;
+			}
+
+			hr {
+				display: inline-block;
+				margin: 0 0 0.3em;
+				width: 100%;
+			}
+
+			.menu-tree-view {
+				padding: 0 15px 15px;
+
+				.list-group .icon::before,
+				.list-tree .icon::before {
+					position: inherit;
+				}
+
+				.list-tree {
+					li.list-nested-item > .list-item,
+					li:not(.list-nested-item) {
+						line-height: 2.3em;
+					}
+
+					.list-item,
+					.list-nested-item {
+						&,
+						& > div {
+							overflow: hidden;
+							text-overflow: ellipsis;
+						}
+
+						&.selected:before {
+							height: 2.3em;
+						}
+
+						span {
+							margin-right: 0.6em;
+						}
+
+						&.two-lines {
+							&:before {
+								height: 3.75em;
+							}
+
+							.secundary-line {
+								display: block;
+								line-height: 1em;
+								padding-bottom: 0.75em;
+								overflow: hidden;
+								text-overflow: ellipsis;
+							}
+						}
+					}
 				}
 			}
 		}
