@@ -6,7 +6,7 @@
 module.exports =
   TreeNode: class TreeNode extends View
     @content: ({label, sublabel, icon, children, keystroke, type, command, enabled, visible, checked, devMode}, options={}) ->
-      #console.log 'TreeNode.content', arguments
+      # console.log 'TreeNode.content', arguments
       @li class: (if children?.length then 'list-nested-item ' else 'list-item ') + 'list-selectable-item' + (if sublabel then ' two-lines' else ''), =>
         @div class: (if children?.length then 'list-item' else ''), =>
           @span class: 'primary-line', =>
@@ -26,17 +26,17 @@ module.exports =
         if children?.length
           @ul class: 'list-tree', =>
             for child in children
-              #console.log 'TreeNode.content 2', arguments, child, children
+              # console.log 'TreeNode.content 2', arguments, child, children
               @subview 'child', new TreeNode(child, options)
 
     initialize: (item, options={}) ->
-      #console.log 'TreeNode.initialize', arguments
+      # console.log 'TreeNode.initialize', arguments
       @emitter = new Emitter
       @item = item
       @item.view = this
 
       if options.useMnemonic and item.type isnt 'separator'
-        #console.log 'TreeNode.initialize', item.label, arguments
+        # console.log 'TreeNode.initialize', item.label, arguments
         if typeof item.label is 'string' and item.label isnt ''
           @label.html item.label.replace /&(\D)/, (match, group) ->
             "<u>#{group}</u>"
@@ -71,7 +71,7 @@ module.exports =
           child.view.onCopy(callback)
 
     clickItem: (event) =>
-      #console.log 'TreeNode.clickItem', event
+      # console.log 'TreeNode.clickItem', event
       if @item.children?.length and event.which isnt 3
         selected = @hasClass('selected')
         @removeClass('selected') # Remove class to make collapse/expand work
@@ -91,7 +91,7 @@ module.exports =
       return false
 
     copyItem: (event) =>
-      #console.log 'TreeNode.copyItem', arguments, this
+      # console.log 'TreeNode.copyItem', arguments, this
       @emitter.emit('on-copy', {node: @, @item})
       event.stopPropagation()
       return false

@@ -1,7 +1,7 @@
 module.exports =
 class MenuItem
   constructor: ({@label, @sublabel, @selector, @command, @created, @type, @enabled, @visible, @checked, @devMode, submenu, items}) ->
-    #console.log 'MenuItem.constructor', arguments
+    # console.log 'MenuItem.constructor', arguments
 
     @label ?= @sublabel
     @label ?= @selector
@@ -29,9 +29,9 @@ acceleratorForCommand = (command, selector) ->
 
   modifiers = modifiers.map (modifier) ->
     modifier.replace(/shift/ig, "Shift")
-            .replace(/cmd/ig, "Command")
-            .replace(/ctrl/ig, "Ctrl")
-            .replace(/alt/ig, "Alt")
+      .replace(/cmd/ig, "Command")
+      .replace(/ctrl/ig, "Ctrl")
+      .replace(/alt/ig, "Alt")
 
   keys = modifiers.concat([key])
   keys.join("+")

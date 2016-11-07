@@ -3,7 +3,7 @@ MenuManagerURI = 'atom://menu-manager'
 MenuManagerView = null
 
 createMenuManagerView = (state) ->
-  #console.log 'createMenuManagerView', this, arguments
+  # console.log 'createMenuManagerView', this, arguments
   MenuManagerView ?= require './menu-manager-view'
   new MenuManagerView(state)
 
